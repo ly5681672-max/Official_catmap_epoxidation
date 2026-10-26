@@ -23,7 +23,6 @@ print(f"图表输出目录: {output_dir}")
 model.run()
 
 from catmap import analyze
-descriptor_names = ['OOH_s', 'O_s']
 vm = analyze.VectorMap(model)
 vm.plot_variable = 'rate' #tell the model which output to plot
 vm.log_scale = True #rates should be plotted on a log-scale
@@ -56,8 +55,15 @@ vm.min = 0
 vm.max = 1
 vm.plot(save=str(output_dir /'coverage.pdf'))
 
-vm.include_labels = ['OOH_s']
-vm.plot(save=str(output_dir /'OOH_coverage.pdf'))
+coverage_descriptor = model.descriptor_names[0]
+
+vm.include_labels = [coverage_descriptor]
+vm.plot(
+    save=str(
+        output_dir /
+        f"{coverage_descriptor.removesuffix('_s')}_coverage.pdf"
+    )
+)
 
 sa = analyze.ScalingAnalysis(model)
 sa.plot(save=str(output_dir /'scaling.pdf'))
