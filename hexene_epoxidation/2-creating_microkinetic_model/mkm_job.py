@@ -1,5 +1,54 @@
 from catmap import ReactionModel
 from pathlib import Path
+from math import isfinite
+
+
+def auto_descriptor_ranges(model, margin=0.05):
+    ranges = []
+
+    for name in model.descriptor_names:
+        data = model.species_definitions[name].get(
+            "formation_energy"
+        )
+
+        if not isinstance(data, (list, tuple)):
+            raise ValueError(f"{name}: 缺少逐催化剂能量数据")
+
+        if len(data) != len(model.surface_names):
+            raise ValueError(f"{name}: 能量数量与催化剂数量不一致")
+
+        values = []
+        for surface, energy in zip(model.surface_names, data):
+            try:
+                value = float(energy)
+            except (ValueError, TypeError):
+                raise ValueError(
+                    f"{surface}: {name} 缺少有效能量"
+                )
+
+            if not isfinite(value):
+                raise ValueError(
+                    f"{surface}: {name} 能量不是有限数值"
+                )
+
+            values.append(value)
+
+        low = min(values)
+        high = max(values)
+
+        if high <= low:
+            raise ValueError(
+                f"{name}: 数据没有有效跨度，无法自动确定范围"
+            )
+
+        padding = (high - low) * margin
+        ranges.append([
+            low - padding,
+            high + padding
+        ])
+
+    return ranges
+
 
 mkm_file = 'alkene_epoxidation.mkm'
 model = ReactionModel(setup_file=mkm_file)
@@ -19,6 +68,14 @@ output_dir.mkdir(parents=True, exist_ok=True)
 
 print(f"当前描述符: {model.descriptor_names}")
 print(f"图表输出目录: {output_dir}")
+
+model.descriptor_ranges = auto_descriptor_ranges(model)
+
+print("自动描述符范围:")
+for name, bounds in zip(
+    model.descriptor_names, model.descriptor_ranges
+):
+    print(f"  {name}: {bounds}")
 
 model.run()
 

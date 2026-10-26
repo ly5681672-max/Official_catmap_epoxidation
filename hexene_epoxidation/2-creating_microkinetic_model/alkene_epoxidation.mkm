@@ -31,7 +31,8 @@ surface_names = [
 descriptor_names = ['H2O2_s', 'C6H12_s']
 
 # Ranges cover the present Ti-M data and leave a small margin for interpolation.
-descriptor_ranges = [[-7.0, -2.5], [-4.0, 2.5]]
+# 描述符范围由 mkm_job.py 根据真实能量自动计算
+descriptor_ranges = None
 resolution = 20
 
 # Experimental reaction temperature: 60 degC
@@ -113,8 +114,8 @@ pressure_mode = 'static'
 # Force the two selected descriptors to map directly onto the corresponding
 # adsorption energies. Other species are fitted by the generalized linear scaler.
 scaling_constraint_dict = {
-    'OOH_s': [None, 0, None],
-    'O_s': [0, None, None],
+    'H2O2_s': [None, 0, None],
+    'C6H12_s': [0, None, None],
 }
 
 #
