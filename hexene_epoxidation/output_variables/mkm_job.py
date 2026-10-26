@@ -1,6 +1,6 @@
 from catmap import ReactionModel
 
-mkm_file = 'CO_oxidation.mkm'
+mkm_file = 'alkene_epoxidation.mkm'
 model = ReactionModel(setup_file=mkm_file)
 scaler_variables = ['rxn_parameter','frequency','electronic_energy',
     'free_energy','zero_point_energy','enthalpy','entropy']

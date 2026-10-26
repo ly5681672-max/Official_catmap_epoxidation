@@ -8,7 +8,7 @@ FIXME: Output variables 'turnover_frequency' and 'interaction_matrix' currently 
 from catmap import ReactionModel
 from catmap import analyze
 
-mkm_file = 'CO_oxidation.mkm'
+mkm_file = 'alkene_epoxidation.mkm'
 model = ReactionModel(setup_file=mkm_file)
 model.output_variables = ['all']  # <==== Here is where the 'all' magic happens
 two_dim_variables = ['rate_control', 'selectivity_control',
