@@ -26,8 +26,8 @@ from catmap import analyze
 vm = analyze.VectorMap(model)
 vm.plot_variable = 'rate' #tell the model which output to plot
 vm.log_scale = True #rates should be plotted on a log-scale
-vm.min = 1e-25 #minimum rate to plot
-vm.max = 1e3 #maximum rate to plot
+vm.min = 1e-45 #minimum rate to plot
+vm.max = 1e-1 #maximum rate to plot
 vm.plot(save=str(output_dir /'rate.pdf')) #draw the plot and save it as "rate.pdf"
 
 vm.unique_only = False

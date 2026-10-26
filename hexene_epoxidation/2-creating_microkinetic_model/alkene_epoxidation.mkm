@@ -23,7 +23,12 @@ surface_names = [
 # The old c_s descriptor does not exist in the present reaction network.
 # OOH_s describes H2O2 activation/intermediate stability, while O_s describes
 # the stability/removal of surface oxygen after epoxidation.
-descriptor_names = ['OOH_s', 'O_s']
+# 所有中间体物种 elementary_rxns = ([['s', 'H2O2_g'], ['H2O2_s']], [['H2O2_s', 's'],
+# ['Ha_s', 'OOH_s']], [['s', 'C6H12_g'], ['C6H12_s']], [['OOH_s', 'C6H12_s', 's'],
+# ['OOH-C6H12_s', 's', 's'], ['C6H12O_s', 'O_s', 'Hb_s']], [['C6H12O_s'],
+# ['C6H12O_g', 's']], [['Hb_s', 'O_s'], ['Hb-O_s', 's'], ['OH_s', 's']],
+# [['Ha_s', 'OH_s'], ['s', 'H2O_s']], [['H2O_s'], ['H2O_g', 's']])
+descriptor_names = ['H2O2_s', 'C6H12_s']
 
 # Ranges cover the present Ti-M data and leave a small margin for interpolation.
 descriptor_ranges = [[-7.0, -2.5], [-4.0, 2.5]]
