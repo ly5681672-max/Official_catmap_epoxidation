@@ -1,0 +1,27 @@
+用途：用相同的 CatMAP 精确单点计算，同时提取 14 个催化剂的 OOH* 覆盖度及 C6H12O_g 产物生成速率，并执行覆盖度 vs log10(TOF) 的全样本线性回归。
+
+已检查 GitHub 最新版本 mkm_job.py 当前调用：
+    export_tof_tables(model, output_dir, product='C6H12O_g')
+所以只需替换 output_variables/tof_export.py，不改 mkm_job.py、run_mkm_utf8.cmd 或 .mkm。
+
+先备份原 tof_export.py，再复制本文件进入目录：
+H:\catmap\Official_catmap_epoxidation\hexene_epoxidation\output_variables\tof_export.py
+然后在 output_variables 文件夹执行：
+.\run_mkm_utf8.cmd
+
+新增文件（自动按 descriptor_C6H12_OOH 保存）：
+- OOH_coverage_log10TOF_C6H12O_g_catalysts.csv：OOH 覆盖度和同一计算点的 TOF、log10TOF
+- OOH_coverage_log10TOF_C6H12O_g_regression.csv：全有效样本拟合斜率/截距/R²/RMSE/LOOCV Q²
+- OOH_coverage_log10TOF_C6H12O_g.pdf：实际散点 + 全样本线性拟合图（若可绘图）
+
+保留旧文件：
+- TOF_C6H12O_g_grid.csv
+- TOF_C6H12O_g_catalysts.csv
+
+重要限制：
+1. 不修改原始数据和动力学参数，也不会强迫 R² 变高。
+2. 不把 OOH* 吸附能当作 OOH* 覆盖度。
+3. 每个催化剂的覆盖度和速率来自同一次官方 mapper.get_point_output() 调用，不从网格插值。
+4. TOF=0 时 log10 无定义，输出 UNDEFINED_TOF_ZERO，回归仅包含 TOF>0 的位点，并明确计数。
+5. 若某个位点单点求解失败，明确报错，不静默填补。
+6. R² 高不等于物理微观动力学模型可信；需要另审计 TS/IS/FS 一致性、覆盖度可达性与稳态。
