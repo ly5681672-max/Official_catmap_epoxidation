@@ -1,4 +1,3 @@
-
 """CatMAP: 14-site TOF, coverage, DRC, reaction flux and evidence audit.
 
 Drop-in replacement for hexene_epoxidation/output_variables/tof_export.py.
@@ -12,6 +11,7 @@ from mpmath import mp as _catmap_shared_mp
 # Independent numeric context: never change CatMAP solver's global mp.dps.
 mp = _catmap_shared_mp.clone()
 mp.dps = 160
+
 
 TS1_NAME = 'OOH-C6H12_s'
 OOH_NAME = 'OOH_s'
@@ -238,17 +238,36 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
             coverages = list(model._coverage)
             rates = list(model._rate)
             drc = model._rate_control
-            if len(coverages) != len(cov_labels) or len(rates) != len(rxns):
-                raise ValueError(f'{surface}: unexpected coverage or step-rate dimensions')
+            # CatMAP numbers solver returns [adsorbate coverages..., free-site coverage].
+            # output_labels['coverage'] contains ONLY the adsorbate names.  In the
+            # conventional coverage solver the free-site term is implicit.
+            n_ads = len(cov_labels)
+            explicit_site = bool(getattr(model, 'use_numbers_solver', False))
+            expected_ncov = n_ads + (1 if explicit_site else 0)
+            if len(coverages) != expected_ncov or len(rates) != len(rxns):
+                raise ValueError(
+                    f'{surface}: unexpected dimensions: coverage={len(coverages)}, '
+                    f'coverage_labels={n_ads}, expected_coverage={expected_ncov}, '
+                    f'net_step_rates={len(rates)}, elementary_rxns={len(rxns)}, '
+                    f'use_numbers_solver={explicit_site}'
+                )
             if len(drc) != len(rc_gases) or len(drc[idx_rc_gas]) != len(rc_species):
                 raise ValueError(f'{surface}: DRC array / label dimensions disagree')
 
-            cvg_values = [_number(x, f'{surface} coverage {name}')
-                          for name, x in zip(cov_labels, coverages)]
+            cvg_values = [_number(coverages[i], f'{surface} coverage {name}')
+                          for i, name in enumerate(cov_labels)]
             theta = cvg_values[idx_oo]
             theta_c6 = cvg_values[idx_c6]
             sum_theta = sum(cvg_values)
-            empty = site_total - sum_theta  # inferred, NOT independently measured
+            empty = site_total - sum_theta  # Vacancy inferred from adsorbate sum.
+            if explicit_site:
+                # This is an INDEPENDENTLY RETURNED CatMAP solver variable,
+                # so compare it with 1-sum(adsorbate coverages).
+                theta_star_solver = _number(coverages[n_ads], f'{surface} solver vacancy')
+                site_balance_residual = sum_theta + theta_star_solver - site_total
+            else:
+                theta_star_solver = None
+                site_balance_residual = None  # No independent vacancy measurement.
             r2, r4, r5 = [_number(rates[i], f'{surface} reaction {i+1}') for i in (1, 3, 4)]
             tof = _number(model._production_rate[idx_to], f'{surface} product TOF')
             x_ooh = _number(drc[idx_rc_gas][idx_rc_ooh], f'{surface} X_OOH')
@@ -256,9 +275,13 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
             all_drc = [_number(q, f'{surface} DRC member') for q in drc[idx_rc_gas]]
             drc_ok = any(q != 0 for q in all_drc) and all(abs(q) <= 10 for q in all_drc)
 
-            site_ok = (min(cvg_values) >= -mp.mpf('1e-8') and
-                       max(cvg_values) <= 1+mp.mpf('1e-8') and
-                       empty >= -mp.mpf('1e-8') and empty <= 1+mp.mpf('1e-8'))
+            site_tol = mp.mpf('1e-8')
+            site_ok = (min(cvg_values) >= -site_tol and
+                       max(cvg_values) <= site_total + site_tol and
+                       empty >= -site_tol and empty <= site_total + site_tol)
+            if explicit_site:
+                site_ok = (site_ok and -site_tol <= theta_star_solver <= site_total + site_tol
+                           and abs(site_balance_residual) <= site_tol)
             # Three independent rate comparisons, NOT the tautological site sum.
             gap24 = _rel_mismatch(r2, r4)
             gap45 = _rel_mismatch(r4, r5)
@@ -275,7 +298,10 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
             legacy_pairs.append([surface, *map(_text, coords), _text(theta), _text(tof), logtof])
             all_rows.append([
                 surface, *map(_text, coords), _text(theta), _text(theta_c6),
-                _text(sum_theta), _text(empty), _text(tof), logtof,
+                _text(sum_theta), _text(empty),
+                _text(theta_star_solver) if explicit_site else 'NOT_AVAILABLE',
+                _text(site_balance_residual) if explicit_site else 'NOT_INDEPENDENT',
+                _text(tof), logtof,
                 _text(x_ooh), _text(x_ts1), _text(r2), _text(r4), _text(r5),
                 _text(r4-tof), _text(gap24), _text(gap45), _text(gap5tof),
                 _text(max_gap), 'PASS' if site_ok else 'FAIL',
@@ -296,6 +322,7 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
     _save_csv(output_dir / f'OOH_kinetic_evidence_{product}_14sites.csv', [
         'surface_name', *descriptors, 'theta_OOH_s', 'theta_C6H12_s',
         'sum_adsorbate_coverages', 'theta_star_inferred',
+        'theta_star_solver', 'site_balance_residual',
         'C6H12O_product_TOF_per_site_s-1', 'log10_TOF',
         'X_OOH_s_DRC', 'X_TS1_OOH-C6H12_s_DRC',
         'r2_OOH_formation_net_s-1', 'r4_oxygen_transfer_net_s-1',
@@ -336,8 +363,11 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
         '* OOH_ENERGY_SENSITIVE_CANDIDATE flags numerical CatMAP DRC sensitivity, NOT robust independent proof.',
         '* TS1_RATE_CONTROL_CANDIDATE means TS1 rate sensitivity; it is not X_OOH.',
         '* Multiple labels are allowed; the three roles are not mutually exclusive.',
-        '* theta_star_inferred = 1 - sum_adsorbate_coverages; this is a definition, not an independent site balance verification.',
-        '* Site screen checks physical ranges. Flux comparisons r2/r4, r4/r5, r5/TOF give additional checks.',
+        '* theta_star_inferred = 1 - sum_adsorbate_coverages (derived value).',
+        '* With the numbers solver, theta_star_solver is returned separately;',
+        '  site_balance_residual = sum_adsorbate_coverages + theta_star_solver - 1.',
+        '* Site screen checks physical ranges and this solver-vacancy consistency where available.',
+        '* Flux comparisons r2/r4, r4/r5, r5/TOF give additional checks.',
         '* Steady-state reachability and sensitivity to initial inventory/perturbations remain UNVERIFIED.',
         '* DRC numerical screen only checks gross anomalies (all zeros or abs>10), not perturbation convergence.',
         '* TOF here is CatMAP product production_rate, not a measured mass-normalized rate.',

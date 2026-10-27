@@ -1,0 +1,39 @@
+CatMAP OOH kinetic evidence — preliminary, NOT a proof of physical accessibility
+Catalysts: 14
+OOH* coverage >= 0.9: 13
+|X_OOH| >= 0.1 with nonzero, finite, bounded DRC row: 0
+X_TS1 >= 0.5 with nonzero, finite, bounded DRC row: 0
+Passed simple coverage plausibility + relative reaction flux checks: 0
+OOH coverage-logTOF all-site R2: 0.86176198307604790559364071807182945127700741299652324081796155103942434745521642
+OOH coverage-logTOF LOOCV Q2: -616824586824494604755130.03125943216345463757865258909955344364178170355994856646
+
+INTERPRETATION:
+* OOH_ACCUMULATION denotes abundance, NOT rate control.
+* OXYGEN_TRANSFER_PRECURSOR_PATH denotes reaction-network participation and flux match, NOT exclusive control.
+* OOH_ENERGY_SENSITIVE_CANDIDATE flags numerical CatMAP DRC sensitivity, NOT robust independent proof.
+* TS1_RATE_CONTROL_CANDIDATE means TS1 rate sensitivity; it is not X_OOH.
+* Multiple labels are allowed; the three roles are not mutually exclusive.
+* theta_star_inferred = 1 - sum_adsorbate_coverages (derived value).
+* With the numbers solver, theta_star_solver is returned separately;
+  site_balance_residual = sum_adsorbate_coverages + theta_star_solver - 1.
+* Site screen checks physical ranges and this solver-vacancy consistency where available.
+* Flux comparisons r2/r4, r4/r5, r5/TOF give additional checks.
+* Steady-state reachability and sensitivity to initial inventory/perturbations remain UNVERIFIED.
+* DRC numerical screen only checks gross anomalies (all zeros or abs>10), not perturbation convergence.
+* TOF here is CatMAP product production_rate, not a measured mass-normalized rate.
+
+WARNINGS:
+tife: OOH_ACCUMULATION;FLUX_CLOSURE_FAILED;STEADY_STATE_REACHABILITY_UNVERIFIED
+timn: OOH_ACCUMULATION;FLUX_CLOSURE_FAILED;STEADY_STATE_REACHABILITY_UNVERIFIED
+tihf: OOH_ACCUMULATION;FLUX_CLOSURE_FAILED;STEADY_STATE_REACHABILITY_UNVERIFIED
+tire: OOH_ACCUMULATION;FLUX_CLOSURE_FAILED;STEADY_STATE_REACHABILITY_UNVERIFIED
+timo: OOH_ACCUMULATION;FLUX_CLOSURE_FAILED;STEADY_STATE_REACHABILITY_UNVERIFIED
+tiv: OOH_ACCUMULATION;FLUX_CLOSURE_FAILED;STEADY_STATE_REACHABILITY_UNVERIFIED
+tizr: OOH_ACCUMULATION;FLUX_CLOSURE_FAILED;STEADY_STATE_REACHABILITY_UNVERIFIED
+tico: OOH_ACCUMULATION;FLUX_CLOSURE_FAILED;STEADY_STATE_REACHABILITY_UNVERIFIED
+titi: OOH_ACCUMULATION;FLUX_CLOSURE_FAILED;STEADY_STATE_REACHABILITY_UNVERIFIED
+tiw: OOH_LOW_COVERAGE;FLUX_CLOSURE_FAILED;STEADY_STATE_REACHABILITY_UNVERIFIED
+tita: OOH_ACCUMULATION;FLUX_CLOSURE_FAILED;STEADY_STATE_REACHABILITY_UNVERIFIED
+ticr: OOH_ACCUMULATION;FLUX_CLOSURE_FAILED;STEADY_STATE_REACHABILITY_UNVERIFIED
+ti: OOH_ACCUMULATION;FLUX_CLOSURE_FAILED;STEADY_STATE_REACHABILITY_UNVERIFIED
+tini: OOH_ACCUMULATION;FLUX_CLOSURE_FAILED;STEADY_STATE_REACHABILITY_UNVERIFIED
