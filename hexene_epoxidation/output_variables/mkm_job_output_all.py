@@ -7,9 +7,11 @@ FIXME: Output variables 'turnover_frequency' and 'interaction_matrix' currently 
 """
 from catmap import ReactionModel
 from catmap import analyze
+from descriptor_output import configure_descriptor_output
 
 mkm_file = 'alkene_epoxidation.mkm'
 model = ReactionModel(setup_file=mkm_file)
+output_dir = configure_descriptor_output(model, __file__)
 model.output_variables = ['all']  # <==== Here is where the 'all' magic happens
 two_dim_variables = ['rate_control', 'selectivity_control',
                      'rxn_order', 'frequency', 'interaction_matrix']
@@ -48,5 +50,5 @@ for output_variable in model.output_variables:
     print(
         "Plotting {output_variable}, plot type: {plot_type}".format(**locals()))
     m.plot_variable = output_variable
-    fig = m.plot(save='ALL_{output_variable}.pdf'.format(**locals()))
+    fig = m.plot(save=str(output_dir / 'ALL_{output_variable}.pdf'.format(**locals())))
     fig.clf()

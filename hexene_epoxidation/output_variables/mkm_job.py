@@ -1,7 +1,10 @@
 from catmap import ReactionModel
+from descriptor_output import configure_descriptor_output
 
 mkm_file = 'alkene_epoxidation.mkm'
 model = ReactionModel(setup_file=mkm_file)
+output_dir = configure_descriptor_output(model, __file__)
+
 scaler_variables = ['rxn_parameter','frequency','electronic_energy',
     'free_energy','zero_point_energy','enthalpy','entropy']
 # Warning: adding 'rate_control' or 'selectivity_control' to output_variables increases calculation time significantly
@@ -26,7 +29,7 @@ vm.threshold = 1e-25
 vm.unique_only = False
 for out_var in one_dim_variables:
     vm.plot_variable = out_var
-    fig = vm.plot(save=out_var + '.pdf')
+    fig = vm.plot(save=str(output_dir / (out_var + '.pdf')))
     fig.clf()
 
 mm = analyze.MatrixMap(model)
@@ -36,5 +39,5 @@ mm.max = 2
 mm.unique_only = False
 for out_var in two_dim_variables:
     mm.plot_variable = out_var
-    fig = mm.plot(save=out_var + '.pdf')
+    fig = mm.plot(save=str(output_dir / (out_var + '.pdf')))
     fig.clf()
