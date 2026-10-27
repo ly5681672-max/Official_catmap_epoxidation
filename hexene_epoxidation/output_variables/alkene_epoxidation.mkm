@@ -122,6 +122,6 @@ scaling_constraint_dict = {
 # Solver parameters
 #
 decimal_precision = 100
-tolerance = 1e-80  # 绝对残差容差
+tolerance = 1e-100  # 绝对残差容差
 max_rootfinding_iterations = 100
 max_bisections = 3

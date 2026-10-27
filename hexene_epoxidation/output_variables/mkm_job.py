@@ -1,9 +1,14 @@
+from pathlib import Path
+
 from catmap import ReactionModel
 from descriptor_output import configure_descriptor_output
 from tof_export import export_tof_tables
 
 mkm_file = 'alkene_epoxidation.mkm'
 model = ReactionModel(setup_file=mkm_file)
+# CatMAP writes its native model-state log at the end of model.run().
+# Keep that artifact separate so the CMD transcript can own alkene_epoxidation.log.
+model.log_file = str(Path(__file__).resolve().parent / 'alkene_epoxidation_catmap.log')
 output_dir = configure_descriptor_output(model, __file__)
 
 scaler_variables = ['rxn_parameter','electronic_energy',
