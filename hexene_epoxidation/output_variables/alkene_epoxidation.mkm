@@ -33,7 +33,7 @@ descriptor_names = ['C6H12_s', 'OOH_s']
 # Ranges cover the present Ti-M data and leave a small margin for interpolation.
 # 描述符范围由 mkm_job.py 根据真实能量自动计算
 descriptor_ranges = None
-resolution = 20
+resolution = 30
 
 # Experimental reaction temperature: 60 degC
 temperature = 333.15

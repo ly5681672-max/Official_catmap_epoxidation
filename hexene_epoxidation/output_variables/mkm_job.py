@@ -1,5 +1,6 @@
 from catmap import ReactionModel
 from descriptor_output import configure_descriptor_output
+from tof_export import export_tof_tables
 
 mkm_file = 'alkene_epoxidation.mkm'
 model = ReactionModel(setup_file=mkm_file)
@@ -23,12 +24,16 @@ model.run()
 from catmap import analyze
 vm = analyze.VectorMap(model)
 vm.log_scale = True  # not necessarily the right choice of parameters for all output_variables
-vm.min = 1e-25
-vm.max = 1e3
-vm.threshold = 1e-25
+vm.min = 1e-80
+vm.max = 1e1
+vm.threshold = 1e-80
 vm.unique_only = False
+
+# vm.n_ticks = 10 # 增加全局色度条刻度密度
+
 for out_var in one_dim_variables:
     vm.plot_variable = out_var
+    vm.n_ticks = 4 if out_var == 'directional_rates' else 6 # 只针对该文件增加全局色度条刻度密度
     fig = vm.plot(save=str(output_dir / (out_var + '.pdf')))
     fig.clf()
 
@@ -41,3 +46,8 @@ for out_var in two_dim_variables:
     mm.plot_variable = out_var
     fig = mm.plot(save=str(output_dir / (out_var + '.pdf')))
     fig.clf()
+export_tof_tables(
+    model,
+    output_dir,
+    product='C6H12O_g'
+)
