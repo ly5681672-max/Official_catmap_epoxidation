@@ -6,8 +6,7 @@
 rxn_expressions = [
     '* + H2O2_g <-> H2O2*',                                      # H2O2 adsorption
     'H2O2* + * -> Ha* + OOH*',                                   # H2O2 activation
-    '* + C6H12_g <-> C6H12*',                                    # 1-hexene adsorption
-    'OOH* + C6H12* + * <-> OOH-C6H12* + 2* -> C6H12O* + O* + Hb*', # epoxidation, TS
+    'OOH* + C6H12_g + 2* <-> OOH-C6H12* + 2* -> C6H12O* + O* + Hb*', # epoxidation, TS
     'C6H12O* <-> C6H12O_g + *',                                  # epoxide desorption
     'Hb* + O* <-> Hb-O* + * -> OH* + *',                         # H transfer, TS
     'Ha* + OH* -> * + H2O*',                                     # water formation
