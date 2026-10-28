@@ -121,7 +121,9 @@ scaling_constraint_dict = {
 #
 # Solver parameters
 #
-decimal_precision = 100
-tolerance = 1e-150  # 绝对残差容差
+decimal_precision = 300
+# tolerance = 1e-150 绝对残差容差
+# 必须使用任意精度数值，不能直接写浮点字面量 1e-510
+tolerance = __import__('mpmath').mp.mpf('1e-510')
 max_rootfinding_iterations = 100
 max_bisections = 3

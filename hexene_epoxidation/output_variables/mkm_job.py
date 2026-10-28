@@ -35,9 +35,9 @@ export_tof_tables(
 from catmap import analyze
 vm = analyze.VectorMap(model)
 vm.log_scale = True  # not necessarily the right choice of parameters for all output_variables
-vm.min = 1e-200
-vm.max = 1e-1
-vm.threshold = 1e-300
+vm.min = 1e-300
+vm.max = 1e1
+vm.threshold = 0
 vm.unique_only = False
 
 # vm.n_ticks = 10 # 增加全局色度条刻度密度
