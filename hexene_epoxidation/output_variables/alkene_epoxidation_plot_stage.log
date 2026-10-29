@@ -1,0 +1,328 @@
+PLOT_STAGE_CHECKPOINT surfaces=14 descriptors=('OOH_s', 'O_s') coverage_points=900 plot_variables=22
+PLOT_VARIABLE=free_energy
+PLOT_DATA_STATUS=READY variable=free_energy scale=linear reason=raw_data_not_strictly_positive_or_constant total=12600 finite=12600 positive=510 zero=0 negative=12090 min=-34.001129945841889 max=2.2445055250000001 interpolation_nonfinite=0 interpolation_nonpositive=0
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=free_energy
+PLOT_VARIABLE=consumption_rate
+PLOT_DATA_STATUS=READY variable=consumption_rate scale=linear reason=raw_data_not_strictly_positive_or_constant total=3600 finite=3600 positive=1800 zero=1800 negative=0 min=0 max=0.00016431522957960308 interpolation_nonfinite=0 interpolation_nonpositive=0
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=consumption_rate
+PLOT_VARIABLE=interacting_energy
+PLOT_DATA_STATUS=READY variable=interacting_energy scale=linear reason=raw_data_not_strictly_positive_or_constant total=9000 finite=9000 positive=510 zero=0 negative=8490 min=-34.001129945841889 max=2.2445055250000001 interpolation_nonfinite=0 interpolation_nonpositive=0
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=interacting_energy
+PLOT_VARIABLE=directional_rates
+PLOT_DATA_STATUS=READY variable=directional_rates scale=linear reason=raw_data_not_strictly_positive_or_constant total=12600 finite=12600 positive=12053 zero=511 negative=36 min=-2.2304371875157149e-41 max=2422260899646.9937 interpolation_nonfinite=0 interpolation_nonpositive=0
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=directional_rates
+PLOT_VARIABLE=rxn_direction
+PLOT_DATA_STATUS=READY variable=rxn_direction scale=linear reason=raw_data_not_strictly_positive_or_constant total=3600 finite=3600 positive=1800 zero=0 negative=1800 min=-1 max=1 interpolation_nonfinite=0 interpolation_nonpositive=0
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=rxn_direction
+PLOT_VARIABLE=entropy
+PLOT_DATA_STATUS=READY variable=entropy scale=linear reason=raw_data_not_strictly_positive_or_constant total=12600 finite=12600 positive=0 zero=12600 negative=0 min=0 max=0 interpolation_nonfinite=0 interpolation_nonpositive=0
+PLOT_DATA_STATUS=SKIPPED_CONSTANT variable=entropy value=0; no contour levels generated
+PLOT_VARIABLE=forward_rate
+PLOT_DATA_STATUS=READY variable=forward_rate scale=linear reason=catmap_log_interpolation_nonfinite_or_nonpositive total=6300 finite=6300 positive=6300 zero=0 negative=0 min=4.0207774747397317e-192 max=0.00016431522957960308 interpolation_nonfinite=0 interpolation_nonpositive=105
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=forward_rate
+PLOT_VARIABLE=zero_point_energy
+PLOT_DATA_STATUS=READY variable=zero_point_energy scale=linear reason=raw_data_not_strictly_positive_or_constant total=12600 finite=12600 positive=0 zero=12600 negative=0 min=0 max=0 interpolation_nonfinite=0 interpolation_nonpositive=0
+PLOT_DATA_STATUS=SKIPPED_CONSTANT variable=zero_point_energy value=0; no contour levels generated
+PLOT_VARIABLE=reverse_rate_constant
+PLOT_DATA_STATUS=READY variable=reverse_rate_constant scale=linear reason=catmap_log_interpolation_nonfinite_or_nonpositive total=6300 finite=6300 positive=6300 zero=0 negative=0 min=1.5560126242380804e-75 max=6941719332946.7344 interpolation_nonfinite=0 interpolation_nonpositive=31
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=reverse_rate_constant
+PLOT_VARIABLE=selectivity
+PLOT_DATA_STATUS=READY variable=selectivity scale=linear reason=raw_data_not_strictly_positive_or_constant total=3600 finite=3600 positive=3600 zero=0 negative=0 min=0.5 max=0.5 interpolation_nonfinite=0 interpolation_nonpositive=0
+PLOT_DATA_STATUS=SKIPPED_CONSTANT variable=selectivity value=0.5; no contour levels generated
+PLOT_VARIABLE=forward_rate_constant
+PLOT_DATA_STATUS=READY variable=forward_rate_constant scale=linear reason=catmap_log_interpolation_nonfinite_or_nonpositive total=6300 finite=6300 positive=6300 zero=0 negative=0 min=1.2128932101822716e-63 max=6941719332946.7344 interpolation_nonfinite=0 interpolation_nonpositive=18
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=forward_rate_constant
+PLOT_VARIABLE=reverse_rate
+PLOT_DATA_STATUS=READY variable=reverse_rate scale=linear reason=raw_data_not_strictly_positive_or_constant total=6300 finite=6300 positive=0 zero=6300 negative=0 min=0 max=0 interpolation_nonfinite=0 interpolation_nonpositive=0
+PLOT_DATA_STATUS=SKIPPED_CONSTANT variable=reverse_rate value=0; no contour levels generated
+PLOT_VARIABLE=carbon_selectivity
+PLOT_DATA_STATUS=READY variable=carbon_selectivity scale=linear reason=raw_data_not_strictly_positive_or_constant total=3600 finite=3600 positive=1800 zero=1800 negative=0 min=0 max=6 interpolation_nonfinite=0 interpolation_nonpositive=0
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=carbon_selectivity
+PLOT_VARIABLE=apparent_activation_energy
+PLOT_DATA_STATUS=READY variable=apparent_activation_energy scale=linear reason=raw_data_not_strictly_positive_or_constant total=3600 finite=3600 positive=0 zero=3600 negative=0 min=0 max=0 interpolation_nonfinite=0 interpolation_nonpositive=0
+PLOT_DATA_STATUS=SKIPPED_CONSTANT variable=apparent_activation_energy value=0; no contour levels generated
+PLOT_VARIABLE=rate_constant
+PLOT_DATA_STATUS=READY variable=rate_constant scale=linear reason=catmap_log_interpolation_nonfinite_or_nonpositive total=12600 finite=12600 positive=12600 zero=0 negative=0 min=1.5560126242380804e-75 max=6941719332946.7344 interpolation_nonfinite=0 interpolation_nonpositive=49
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=rate_constant
+PLOT_VARIABLE=electronic_energy
+PLOT_DATA_STATUS=READY variable=electronic_energy scale=linear reason=raw_data_not_strictly_positive_or_constant total=12600 finite=12600 positive=510 zero=0 negative=12090 min=-34.001129945841889 max=2.2445055250000001 interpolation_nonfinite=0 interpolation_nonpositive=0
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=electronic_energy
+PLOT_VARIABLE=equilibrium_constant
+PLOT_DATA_STATUS=READY variable=equilibrium_constant scale=linear reason=catmap_log_interpolation_nonfinite_or_nonpositive total=6300 finite=6300 positive=6300 zero=0 negative=0 min=1.7472518723504812e-76 max=3.5752504457523104e+85 interpolation_nonfinite=0 interpolation_nonpositive=51
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=equilibrium_constant
+PLOT_VARIABLE=rate
+PLOT_DATA_STATUS=READY variable=rate scale=linear reason=catmap_log_interpolation_nonfinite_or_nonpositive total=6300 finite=6300 positive=6300 zero=0 negative=0 min=4.0207774747397317e-192 max=0.00016431522957960308 interpolation_nonfinite=0 interpolation_nonpositive=105
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=rate
+PLOT_VARIABLE=production_rate
+PLOT_DATA_STATUS=READY variable=production_rate scale=linear reason=raw_data_not_strictly_positive_or_constant total=3600 finite=3600 positive=1800 zero=1800 negative=0 min=0 max=0.00016431522957960308 interpolation_nonfinite=0 interpolation_nonpositive=0
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=production_rate
+PLOT_VARIABLE=coverage
+PLOT_DATA_STATUS=READY variable=coverage scale=linear reason=catmap_log_interpolation_nonfinite_or_nonpositive total=8100 finite=8100 positive=8100 zero=0 negative=0 min=1.1989928781291186e-100 max=1 interpolation_nonfinite=0 interpolation_nonpositive=55
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=coverage
+PLOT_VARIABLE=enthalpy
+PLOT_DATA_STATUS=READY variable=enthalpy scale=linear reason=raw_data_not_strictly_positive_or_constant total=12600 finite=12600 positive=0 zero=12600 negative=0 min=0 max=0 interpolation_nonfinite=0 interpolation_nonpositive=0
+PLOT_DATA_STATUS=SKIPPED_CONSTANT variable=enthalpy value=0; no contour levels generated
+PLOT_VARIABLE=rxn_parameter
+PLOT_DATA_STATUS=READY variable=rxn_parameter scale=linear reason=raw_data_not_strictly_positive_or_constant total=9000 finite=9000 positive=510 zero=0 negative=8490 min=-34.001129945841889 max=2.2445055250000001 interpolation_nonfinite=0 interpolation_nonpositive=0
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+H:\catmap\Official_catmap_epoxidation\catmap_official_source\catmap\analyze\analysis_base.py:330: UserWarning: The following kwargs were not used by contour: 'title'
+  plot = getattr(ax,self.plot_function)(*plot_in,**plot_args)
+PLOT_STATUS=SUCCESS variable=rxn_parameter
+PLOT_STAGE_EXIT_CODE=0
