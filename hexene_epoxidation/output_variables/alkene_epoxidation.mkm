@@ -22,12 +22,7 @@ surface_names = [
 # The old c_s descriptor does not exist in the present reaction network.
 # OOH_s describes H2O2 activation/intermediate stability, while O_s describes
 # the stability/removal of surface oxygen after epoxidation.
-# 所有中间体物种 elementary_rxns = ([['s', 'H2O2_g'], ['H2O2_s']], [['H2O2_s', 's'],
-# ['Ha_s', 'OOH_s']], [['s', 'C6H12_g'], ['C6H12_s']], [['OOH_s', 'C6H12_s', 's'],
-# ['OOH-C6H12_s', 's', 's'], ['C6H12O_s', 'O_s', 'Hb_s']], [['C6H12O_s'],
-# ['C6H12O_g', 's']], [['Hb_s', 'O_s'], ['Hb-O_s', 's'], ['OH_s', 's']],
-# [['Ha_s', 'OH_s'], ['s', 'H2O_s']], [['H2O_s'], ['H2O_g', 's']])
-descriptor_names = ['C6H12_s', 'OOH_s']
+descriptor_names = ['OOH_s', 'O_s']
 
 # Ranges cover the present Ti-M data and leave a small margin for interpolation.
 # 描述符范围由 mkm_job.py 根据真实能量自动计算
@@ -113,8 +108,8 @@ pressure_mode = 'static'
 # Force the two selected descriptors to map directly onto the corresponding
 # adsorption energies. Other species are fitted by the generalized linear scaler.
 scaling_constraint_dict = {
-    'C6H12_s': [None, None, None],
     'OOH_s': [None, None, None],
+    'O_s': [None, None, None],
 }
 
 #

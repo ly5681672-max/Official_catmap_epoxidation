@@ -1,0 +1,25 @@
+CatMAP OOH kinetic evidence — preliminary, NOT a proof of physical accessibility
+Catalysts: 14
+OOH* coverage >= 0.9: 0
+|X_OOH| >= 0.1 with nonzero, finite, bounded DRC row: 9
+X_TS1 >= 0.5 with nonzero, finite, bounded DRC row: 1
+Passed simple coverage plausibility + relative reaction flux checks: 14
+OOH coverage-logTOF all-site R2: 0.24093522747340925822920377924755518935940446163176651900139238613152418531581405
+OOH coverage-logTOF LOOCV Q2: -169353278187238915776566.09907542503965084665888335465193176532321722500078465387
+
+INTERPRETATION:
+* OOH_ACCUMULATION denotes abundance, NOT rate control.
+* OXYGEN_TRANSFER_PRECURSOR_PATH denotes reaction-network participation and flux match, NOT exclusive control.
+* OOH_ENERGY_SENSITIVE_CANDIDATE flags numerical CatMAP DRC sensitivity, NOT robust independent proof.
+* TS1_RATE_CONTROL_CANDIDATE means TS1 rate sensitivity; it is not X_OOH.
+* Multiple labels are allowed; the three roles are not mutually exclusive.
+* theta_star_inferred = 1 - sum_adsorbate_coverages (derived value).
+* With the numbers solver, theta_star_solver is returned separately;
+  site_balance_residual = sum_adsorbate_coverages + theta_star_solver - 1.
+* Site screen checks physical ranges and this solver-vacancy consistency where available.
+* Flux comparisons r2/r3, r3/r4, r4/TOF give additional checks.
+* Steady-state reachability and sensitivity to initial inventory/perturbations remain UNVERIFIED.
+* DRC numerical screen only checks gross anomalies (all zeros or abs>10), not perturbation convergence.
+* TOF here is CatMAP product production_rate, not a measured mass-normalized rate.
+
+WARNINGS:

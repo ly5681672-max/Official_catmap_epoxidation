@@ -15,7 +15,7 @@ mp.dps = 160
 
 TS1_NAME = 'OOH-C6H12_s'
 OOH_NAME = 'OOH_s'
-ALKENE_NAME = 'C6H12_s'
+ALKENE_NAME = 'C6H12_g'
 
 
 def _number(x, what):
@@ -114,7 +114,7 @@ def _fit_plot(pairs, fit, path):
         plt.close(fig)
 
 
-def _classify(theta, x_ooh, x_ts1, r4, tof, site_ok, flux_ok, drc_ok):
+def _classify(theta, x_ooh, x_ts1, r3, tof, site_ok, flux_ok, drc_ok):
     """Multiple provisional evidence tags, never mutually exclusive labels."""
     tags = []
     if theta >= mp.mpf('0.9'):
@@ -123,7 +123,7 @@ def _classify(theta, x_ooh, x_ts1, r4, tof, site_ok, flux_ok, drc_ok):
         tags.append('OOH_LOW_COVERAGE')
     else:
         tags.append('OOH_INTERMEDIATE_COVERAGE')
-    if r4 > 0 and tof > 0 and flux_ok:
+    if r3 > 0 and tof > 0 and flux_ok:
         tags.append('OXYGEN_TRANSFER_PRECURSOR_PATH')
     if drc_ok and abs(x_ooh) >= mp.mpf('0.1'):
         tags.append('OOH_ENERGY_SENSITIVE_CANDIDATE')
@@ -168,7 +168,7 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
 
     Thresholds are descriptive screening flags, NOT universal physical criteria:
       coverage >= 0.9; |X_OOH| >= 0.1; X_TS1 >= 0.5;
-      8-step net flux relative mismatch <= 1e-3; site tolerance 1e-8.
+      7-step net flux relative mismatch <= 1e-3; site tolerance 1e-8.
     """
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -187,12 +187,12 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
     if site_total != 1:
         raise ValueError('Only a normalized single-site model with total=1 is supported')
     rxns = model.elementary_rxns
-    if len(rxns) != 8 or not (OOH_NAME in rxns[3][0] and
-                              ALKENE_NAME in rxns[3][0] and
-                              TS1_NAME in rxns[3][1] and
-                              'C6H12O_s' in rxns[3][-1] and
-                              product in rxns[4][-1]):
-        raise ValueError('Current reaction 4/5 does not match expected oxygen-transfer / desorption mechanism')
+    if len(rxns) != 7 or not (OOH_NAME in rxns[2][0] and
+                              ALKENE_NAME in rxns[2][0] and
+                              TS1_NAME in rxns[2][1] and
+                              'C6H12O_s' in rxns[2][-1] and
+                              product in rxns[3][-1]):
+        raise ValueError('Current ER reaction 3/4 does not match expected oxygen-transfer / desorption mechanism')
 
     gas_labels = list(model.output_labels.get('production_rate', []))
     prod_idx = _labels_index(gas_labels, product, 'production_rate')
@@ -230,7 +230,6 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
                 raise ValueError(f'{surface}: malformed DRC labels: {rc_labels!r}')
             rc_gases, rc_species = map(list, rc_labels)
             idx_oo = _labels_index(cov_labels, OOH_NAME, 'coverage')
-            idx_c6 = _labels_index(cov_labels, ALKENE_NAME, 'coverage')
             idx_to = _labels_index(prod_labels, product, 'production_rate')
             idx_rc_gas = _labels_index(rc_gases, product, 'rate_control gas axis')
             idx_rc_ooh = _labels_index(rc_species, OOH_NAME, 'rate_control energy axis')
@@ -257,7 +256,6 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
             cvg_values = [_number(coverages[i], f'{surface} coverage {name}')
                           for i, name in enumerate(cov_labels)]
             theta = cvg_values[idx_oo]
-            theta_c6 = cvg_values[idx_c6]
             sum_theta = sum(cvg_values)
             empty = site_total - sum_theta  # Vacancy inferred from adsorbate sum.
             if explicit_site:
@@ -268,7 +266,7 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
             else:
                 theta_star_solver = None
                 site_balance_residual = None  # No independent vacancy measurement.
-            r2, r4, r5 = [_number(rates[i], f'{surface} reaction {i+1}') for i in (1, 3, 4)]
+            r2, r3, r4 = [_number(rates[i], f'{surface} reaction {i+1}') for i in (1, 2, 3)]
             tof = _number(model._production_rate[idx_to], f'{surface} product TOF')
             x_ooh = _number(drc[idx_rc_gas][idx_rc_ooh], f'{surface} X_OOH')
             x_ts1 = _number(drc[idx_rc_gas][idx_rc_ts1], f'{surface} X_TS1')
@@ -283,13 +281,13 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
                 site_ok = (site_ok and -site_tol <= theta_star_solver <= site_total + site_tol
                            and abs(site_balance_residual) <= site_tol)
             # Three independent rate comparisons, NOT the tautological site sum.
-            gap24 = _rel_mismatch(r2, r4)
-            gap45 = _rel_mismatch(r4, r5)
-            gap5tof = _rel_mismatch(r5, tof)
-            max_gap = max(gap24, gap45, gap5tof)
-            flux_ok = max_gap <= mp.mpf('1e-3') and r2 >= 0 and r4 >= 0 and r5 >= 0
+            gap23 = _rel_mismatch(r2, r3)
+            gap34 = _rel_mismatch(r3, r4)
+            gap4tof = _rel_mismatch(r4, tof)
+            max_gap = max(gap23, gap34, gap4tof)
+            flux_ok = max_gap <= mp.mpf('1e-3') and r2 >= 0 and r3 >= 0 and r4 >= 0
             logtof = _text(mp.log10(tof)) if tof > 0 else 'UNDEFINED_TOF_ZERO'
-            label = _classify(theta, x_ooh, x_ts1, r4, tof, site_ok, flux_ok, drc_ok)
+            label = _classify(theta, x_ooh, x_ts1, r3, tof, site_ok, flux_ok, drc_ok)
             if not site_ok or not flux_ok or not drc_ok:
                 warnings.append(f'{surface}: {label}')
             if tof > 0:
@@ -297,13 +295,13 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
             legacy_tof_rows.append([surface, *map(_text, coords), _text(tof)])
             legacy_pairs.append([surface, *map(_text, coords), _text(theta), _text(tof), logtof])
             all_rows.append([
-                surface, *map(_text, coords), _text(theta), _text(theta_c6),
+                surface, *map(_text, coords), _text(theta),
                 _text(sum_theta), _text(empty),
                 _text(theta_star_solver) if explicit_site else 'NOT_AVAILABLE',
                 _text(site_balance_residual) if explicit_site else 'NOT_INDEPENDENT',
                 _text(tof), logtof,
-                _text(x_ooh), _text(x_ts1), _text(r2), _text(r4), _text(r5),
-                _text(r4-tof), _text(gap24), _text(gap45), _text(gap5tof),
+                _text(x_ooh), _text(x_ts1), _text(r2), _text(r3), _text(r4),
+                _text(r3-tof), _text(gap23), _text(gap34), _text(gap4tof),
                 _text(max_gap), 'PASS' if site_ok else 'FAIL',
                 'PASS' if flux_ok else 'FAIL',
                 'CHECK' if not drc_ok else 'FINITE_NONZERO', _interpret_tags(label), label,
@@ -320,14 +318,14 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
               ['surface_name', *descriptors, 'theta_OOH_s',
                f'{product}_production_rate_per_site_s-1', 'log10_TOF_per_site_s-1'], legacy_pairs)
     _save_csv(output_dir / f'OOH_kinetic_evidence_{product}_14sites.csv', [
-        'surface_name', *descriptors, 'theta_OOH_s', 'theta_C6H12_s',
+        'surface_name', *descriptors, 'theta_OOH_s',
         'sum_adsorbate_coverages', 'theta_star_inferred',
         'theta_star_solver', 'site_balance_residual',
         'C6H12O_product_TOF_per_site_s-1', 'log10_TOF',
         'X_OOH_s_DRC', 'X_TS1_OOH-C6H12_s_DRC',
-        'r2_OOH_formation_net_s-1', 'r4_oxygen_transfer_net_s-1',
-        'r5_epoxide_desorption_net_s-1', 'r4_minus_product_TOF_s-1',
-        'rel_gap_r2_r4', 'rel_gap_r4_r5', 'rel_gap_r5_TOF', 'max_rel_flux_gap',
+        'r2_OOH_formation_net_s-1', 'r3_oxygen_transfer_net_s-1',
+        'r4_epoxide_desorption_net_s-1', 'r3_minus_product_TOF_s-1',
+        'rel_gap_r2_r3', 'rel_gap_r3_r4', 'rel_gap_r4_TOF', 'max_rel_flux_gap',
         'site_occupancy_check', 'flux_closure_check', 'DRC_numeric_screen',
         'mechanistic_interpretation_cn', 'mechanistic_evidence_tags'], all_rows)
 
@@ -367,7 +365,7 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
         '* With the numbers solver, theta_star_solver is returned separately;',
         '  site_balance_residual = sum_adsorbate_coverages + theta_star_solver - 1.',
         '* Site screen checks physical ranges and this solver-vacancy consistency where available.',
-        '* Flux comparisons r2/r4, r4/r5, r5/TOF give additional checks.',
+        '* Flux comparisons r2/r3, r3/r4, r4/TOF give additional checks.',
         '* Steady-state reachability and sensitivity to initial inventory/perturbations remain UNVERIFIED.',
         '* DRC numerical screen only checks gross anomalies (all zeros or abs>10), not perturbation convergence.',
         '* TOF here is CatMAP product production_rate, not a measured mass-normalized rate.',
