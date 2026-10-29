@@ -114,8 +114,8 @@ pressure_mode = 'static'
 # Force the two selected descriptors to map directly onto the corresponding
 # adsorption energies. Other species are fitted by the generalized linear scaler.
 scaling_constraint_dict = {
-    'Ha_s': [None, None, None],
-    'O_s': [None, None, None],
+    'C6H12_s': [None, None, None],
+    'OOH_s': [None, None, None],
 }
 
 #
