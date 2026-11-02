@@ -15,7 +15,8 @@ mp.dps = 160
 
 TS1_NAME = 'OOH-C6H12_s'
 OOH_NAME = 'OOH_s'
-ALKENE_NAME = 'C6H12_g'
+ALKENE_GAS_NAME = 'C6H12_g'
+ALKENE_ADS_NAME = 'C6H12_s'
 
 
 def _number(x, what):
@@ -44,6 +45,39 @@ def _labels_index(labels, name, context):
     if values.count(name) != 1:
         raise ValueError(f'{context}: {name!r} not uniquely present in {values!r}')
     return values.index(name)
+
+
+def _validate_reaction_network(rxns, product):
+    """Validate the current seven-step LH network without changing its chemistry."""
+    if len(rxns) != 7:
+        raise ValueError(f'Expected 7 elementary reactions for current LH model; found {len(rxns)}')
+
+    def has(step_index, side_index, species):
+        try:
+            return species in rxns[step_index][side_index]
+        except (IndexError, TypeError):
+            return False
+
+    checks = [
+        (0, 0, 'H2O2_g', 'R1 H2O2 reactant'),
+        (0, -1, 'OOH_s', 'R1 OOH* product'),
+        (0, -1, 'Ha_s', 'R1 Ha* product'),
+        (1, 0, ALKENE_GAS_NAME, 'R2 gas-phase alkene reactant'),
+        (1, -1, ALKENE_ADS_NAME, 'R2 adsorbed alkene product'),
+        (2, 0, OOH_NAME, 'R3 OOH* reactant'),
+        (2, 0, ALKENE_ADS_NAME, 'R3 adsorbed alkene reactant'),
+        (2, 1, TS1_NAME, 'R3 oxygen-transfer transition state'),
+        (2, -1, 'C6H12O_s', 'R3 adsorbed epoxide product'),
+        (3, 0, 'C6H12O_s', 'R4 adsorbed epoxide reactant'),
+        (3, -1, product, 'R4 gas-phase epoxide product'),
+    ]
+    failed = [description for i, side, species, description in checks
+              if not has(i, side, species)]
+    if failed:
+        raise ValueError(
+            'Reaction network does not match the expected LH mechanism: '
+            + '; '.join(failed)
+        )
 
 
 def _rel_mismatch(a, b):
@@ -187,12 +221,7 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
     if site_total != 1:
         raise ValueError('Only a normalized single-site model with total=1 is supported')
     rxns = model.elementary_rxns
-    if len(rxns) != 7 or not (OOH_NAME in rxns[2][0] and
-                              ALKENE_NAME in rxns[2][0] and
-                              TS1_NAME in rxns[2][1] and
-                              'C6H12O_s' in rxns[2][-1] and
-                              product in rxns[3][-1]):
-        raise ValueError('Current ER reaction 3/4 does not match expected oxygen-transfer / desorption mechanism')
+    _validate_reaction_network(rxns, product)
 
     gas_labels = list(model.output_labels.get('production_rate', []))
     prod_idx = _labels_index(gas_labels, product, 'production_rate')
@@ -266,7 +295,9 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
             else:
                 theta_star_solver = None
                 site_balance_residual = None  # No independent vacancy measurement.
-            r2, r3, r4 = [_number(rates[i], f'{surface} reaction {i+1}') for i in (1, 2, 3)]
+            r1, r2, r3, r4 = [
+                _number(rates[i], f'{surface} reaction {i+1}') for i in range(4)
+            ]
             tof = _number(model._production_rate[idx_to], f'{surface} product TOF')
             x_ooh = _number(drc[idx_rc_gas][idx_rc_ooh], f'{surface} X_OOH')
             x_ts1 = _number(drc[idx_rc_gas][idx_rc_ts1], f'{surface} X_TS1')
@@ -280,12 +311,16 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
             if explicit_site:
                 site_ok = (site_ok and -site_tol <= theta_star_solver <= site_total + site_tol
                            and abs(site_balance_residual) <= site_tol)
-            # Three independent rate comparisons, NOT the tautological site sum.
+            # Steady-state balances for OOH*, adsorbed alkene and adsorbed epoxide.
+            # R1 forms OOH*, R2 adsorbs alkene, R3 consumes both, and R4
+            # desorbs the epoxide. Compare every required net flux independently.
+            gap13 = _rel_mismatch(r1, r3)
             gap23 = _rel_mismatch(r2, r3)
             gap34 = _rel_mismatch(r3, r4)
             gap4tof = _rel_mismatch(r4, tof)
-            max_gap = max(gap23, gap34, gap4tof)
-            flux_ok = max_gap <= mp.mpf('1e-3') and r2 >= 0 and r3 >= 0 and r4 >= 0
+            max_gap = max(gap13, gap23, gap34, gap4tof)
+            flux_ok = (max_gap <= mp.mpf('1e-3') and
+                       all(rate >= 0 for rate in (r1, r2, r3, r4)))
             logtof = _text(mp.log10(tof)) if tof > 0 else 'UNDEFINED_TOF_ZERO'
             label = _classify(theta, x_ooh, x_ts1, r3, tof, site_ok, flux_ok, drc_ok)
             if not site_ok or not flux_ok or not drc_ok:
@@ -300,8 +335,10 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
                 _text(theta_star_solver) if explicit_site else 'NOT_AVAILABLE',
                 _text(site_balance_residual) if explicit_site else 'NOT_INDEPENDENT',
                 _text(tof), logtof,
-                _text(x_ooh), _text(x_ts1), _text(r2), _text(r3), _text(r4),
-                _text(r3-tof), _text(gap23), _text(gap34), _text(gap4tof),
+                _text(x_ooh), _text(x_ts1),
+                _text(r1), _text(r2), _text(r3), _text(r4),
+                _text(r1-r3), _text(r2-r3), _text(r3-r4), _text(r4-tof),
+                _text(gap13), _text(gap23), _text(gap34), _text(gap4tof),
                 _text(max_gap), 'PASS' if site_ok else 'FAIL',
                 'PASS' if flux_ok else 'FAIL',
                 'CHECK' if not drc_ok else 'FINITE_NONZERO', _interpret_tags(label), label,
@@ -323,9 +360,13 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
         'theta_star_solver', 'site_balance_residual',
         'C6H12O_product_TOF_per_site_s-1', 'log10_TOF',
         'X_OOH_s_DRC', 'X_TS1_OOH-C6H12_s_DRC',
-        'r2_OOH_formation_net_s-1', 'r3_oxygen_transfer_net_s-1',
-        'r4_epoxide_desorption_net_s-1', 'r3_minus_product_TOF_s-1',
-        'rel_gap_r2_r3', 'rel_gap_r3_r4', 'rel_gap_r4_TOF', 'max_rel_flux_gap',
+        'r1_H2O2_activation_OOH_formation_net_s-1',
+        'r2_alkene_adsorption_net_s-1', 'r3_oxygen_transfer_net_s-1',
+        'r4_epoxide_desorption_net_s-1',
+        'r1_minus_r3_s-1', 'r2_minus_r3_s-1', 'r3_minus_r4_s-1',
+        'r4_minus_product_TOF_s-1',
+        'rel_gap_r1_r3', 'rel_gap_r2_r3', 'rel_gap_r3_r4',
+        'rel_gap_r4_TOF', 'max_rel_flux_gap',
         'site_occupancy_check', 'flux_closure_check', 'DRC_numeric_screen',
         'mechanistic_interpretation_cn', 'mechanistic_evidence_tags'], all_rows)
 
@@ -365,7 +406,8 @@ def export_tof_tables(model, output_dir, product='C6H12O_g'):
         '* With the numbers solver, theta_star_solver is returned separately;',
         '  site_balance_residual = sum_adsorbate_coverages + theta_star_solver - 1.',
         '* Site screen checks physical ranges and this solver-vacancy consistency where available.',
-        '* Flux comparisons r2/r3, r3/r4, r4/TOF give additional checks.',
+        '* Flux comparisons r1/r3 (OOH* balance), r2/r3 (alkene* balance), '
+        '  r3/r4 (epoxide* balance), and r4/TOF are checked independently.',
         '* Steady-state reachability and sensitivity to initial inventory/perturbations remain UNVERIFIED.',
         '* DRC numerical screen only checks gross anomalies (all zeros or abs>10), not perturbation convergence.',
         '* TOF here is CatMAP product production_rate, not a measured mass-normalized rate.',
