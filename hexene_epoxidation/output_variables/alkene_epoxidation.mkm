@@ -4,9 +4,9 @@
 
 # 1-hexene epoxidation with H2O2
 rxn_expressions = [
-    '* + H2O2_g <-> H2O2*',                                      # H2O2 adsorption
-    'H2O2* + * -> Ha* + OOH*',                                   # H2O2 activation
-    'OOH* + C6H12_g + 2* <-> OOH-C6H12* + 2* -> C6H12O* + O* + Hb*', # epoxidation, TS
+    'H2O2_g + 2* -> Ha* + OOH*',
+    'C6H12_g + * -> C6H12*',
+    'OOH* + C6H12* + * <-> OOH-C6H12* + 2* -> C6H12O* + O* + Hb*', # epoxidation, TS
     'C6H12O* <-> C6H12O_g + *',                                  # epoxide desorption
     'Hb* + O* <-> Hb-O* + * -> OH* + *',                         # H transfer, TS
     'Ha* + OH* -> * + H2O*',                                     # water formation
@@ -20,9 +20,9 @@ surface_names = [
 ]
 
 # The old c_s descriptor does not exist in the present reaction network.
-# OOH_s describes H2O2 activation/intermediate stability, while O_s describes
+# OOH_s describes H2O2 activation/intermediate stability, while C6H12_s describes
 # the stability/removal of surface oxygen after epoxidation.
-descriptor_names = ['OOH_s', 'O_s']
+descriptor_names = ['OOH_s', 'C6H12_s']
 
 # Ranges cover the present Ti-M data and leave a small margin for interpolation.
 # 描述符范围由 mkm_job.py 根据真实能量自动计算
@@ -109,7 +109,7 @@ pressure_mode = 'static'
 # adsorption energies. Other species are fitted by the generalized linear scaler.
 scaling_constraint_dict = {
     'OOH_s': [None, None, None],
-    'O_s': [None, None, None],
+    'C6H12_s': [None, None, None],
 }
 
 #
