@@ -1,0 +1,33 @@
+G_IS = [0]*7
+    G_TS = [0]*7
+    G_FS = [0]*7
+    G_af = [0]*7
+    G_ar = [0]*7
+    G_IS[0] = gas_energies[2] + site_energies[0] + site_energies[0]
+    G_FS[0] = Gf[3] + Gf[6]
+    G_TS[0] = max([G_IS[0],G_FS[0]])
+    
+    G_IS[1] = gas_energies[1] + site_energies[0]
+    G_FS[1] = Gf[1]
+    G_TS[1] = max([G_IS[1],G_FS[1]])
+    
+    G_IS[2] = Gf[6] + Gf[1] + site_energies[0]
+    G_FS[2] = Gf[0] + Gf[7] + Gf[4]
+    G_TS[2] = Gf[9] + site_energies[0] + site_energies[0]
+    
+    G_IS[3] = Gf[0]
+    G_FS[3] = gas_energies[0] + site_energies[0]
+    G_TS[3] = max([G_IS[3],G_FS[3]])
+    
+    G_IS[4] = Gf[4] + Gf[7]
+    G_FS[4] = Gf[5] + site_energies[0]
+    G_TS[4] = Gf[8] + site_energies[0]
+    
+    G_IS[5] = Gf[3] + Gf[5]
+    G_FS[5] = site_energies[0] + Gf[2]
+    G_TS[5] = max([G_IS[5],G_FS[5]])
+    
+    G_IS[6] = Gf[2]
+    G_FS[6] = gas_energies[3] + site_energies[0]
+    G_TS[6] = max([G_IS[6],G_FS[6]])
+    

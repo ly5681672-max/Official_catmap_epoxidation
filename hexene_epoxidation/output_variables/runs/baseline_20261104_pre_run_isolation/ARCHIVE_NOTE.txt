@@ -1,0 +1,5 @@
+Archive created: 2026-11-04 Asia/Shanghai
+Purpose: preserve the existing output_variables state before isolating subsequent runs.
+Source files were copied; originals in output_variables were retained.
+Provenance note: the copied alkene_epoxidation.mkm currently contains tolerance=1e-175, while existing alkene_epoxidation.log reports an effective tolerance near 1e-170. Treat these existing result/log/config artifacts as potentially from different run states; no run identifier was present in the append-only debug CSV files.
+Future run isolation is configured separately by run_mkm_utf8.cmd.

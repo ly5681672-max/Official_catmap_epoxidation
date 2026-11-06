@@ -1,0 +1,57 @@
+G_IS = [0]*7
+    G_TS = [0]*7
+    G_FS = [0]*7
+    G_af = [0]*7
+    G_ar = [0]*7
+    dG_IS = [0]*7
+    dG_TS = [0]*7
+    dG_FS = [0]*7
+    G_IS[0] = gas_energies[2] + site_energies[1] + site_energies[1]
+    G_FS[0] = Gf[3] + Gf[6]
+    dG_IS[0] = element_wise_addition([[0]*8])
+    dG_FS[0] = element_wise_addition([dGs[3] , dGs[6]])
+    G_TS[0] = max([G_IS[0],G_FS[0]])
+    dG_TS[0] = None #determined later
+    
+    G_IS[1] = gas_energies[1] + site_energies[1]
+    G_FS[1] = Gf[1]
+    dG_IS[1] = element_wise_addition([[0]*8])
+    dG_FS[1] = element_wise_addition([dGs[1]])
+    G_TS[1] = max([G_IS[1],G_FS[1]])
+    dG_TS[1] = None #determined later
+    
+    G_IS[2] = Gf[6] + Gf[1] + site_energies[1]
+    G_FS[2] = Gf[0] + Gf[7] + Gf[4]
+    dG_IS[2] = element_wise_addition([dGs[6] , dGs[1]])
+    dG_FS[2] = element_wise_addition([dGs[0] , dGs[7] , dGs[4]])
+    G_TS[2] = Gf[9] + site_energies[1] + site_energies[1]
+    dG_TS[2] = element_wise_addition([dGs[9]])
+    
+    G_IS[3] = Gf[0]
+    G_FS[3] = gas_energies[0] + site_energies[1]
+    dG_IS[3] = element_wise_addition([dGs[0]])
+    dG_FS[3] = element_wise_addition([[0]*8])
+    G_TS[3] = max([G_IS[3],G_FS[3]])
+    dG_TS[3] = None #determined later
+    
+    G_IS[4] = Gf[4] + Gf[7]
+    G_FS[4] = Gf[5] + site_energies[1]
+    dG_IS[4] = element_wise_addition([dGs[4] , dGs[7]])
+    dG_FS[4] = element_wise_addition([dGs[5]])
+    G_TS[4] = Gf[8] + site_energies[1]
+    dG_TS[4] = element_wise_addition([dGs[8]])
+    
+    G_IS[5] = Gf[3] + Gf[5]
+    G_FS[5] = site_energies[1] + Gf[2]
+    dG_IS[5] = element_wise_addition([dGs[3] , dGs[5]])
+    dG_FS[5] = element_wise_addition([dGs[2]])
+    G_TS[5] = max([G_IS[5],G_FS[5]])
+    dG_TS[5] = None #determined later
+    
+    G_IS[6] = Gf[2]
+    G_FS[6] = gas_energies[3] + site_energies[1]
+    dG_IS[6] = element_wise_addition([dGs[2]])
+    dG_FS[6] = element_wise_addition([[0]*8])
+    G_TS[6] = max([G_IS[6],G_FS[6]])
+    dG_TS[6] = None #determined later
+    

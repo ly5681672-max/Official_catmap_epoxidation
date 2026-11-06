@@ -1,0 +1,16 @@
+/hexene_epoxidation/2-creating_microkinetic_model/error_log.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/2-creating_microkinetic_model/jacobian_norm.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/2-creating_microkinetic_model/runs/run_20261106_101018_651/jacobian_norm.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/2-creating_microkinetic_model/runs/run_20261106_103349_365/error_log.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/2-creating_microkinetic_model/runs/run_20261106_103349_365/jacobian_norm.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/2-creating_microkinetic_model/runs/run_20261106_105947_053/error_log.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/2-creating_microkinetic_model/runs/run_20261106_105947_053/jacobian_norm.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/2-creating_microkinetic_model/runs/run_20261106_105947_053/solution.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/2-creating_microkinetic_model/runs/run_20261106_105947_053/solution_numbers.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/2-creating_microkinetic_model/runs/run_20261106_114000_136/error_log.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/2-creating_microkinetic_model/runs/run_20261106_114000_136/jacobian_norm.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/2-creating_microkinetic_model/runs/run_20261106_114000_136/solution.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/2-creating_microkinetic_model/runs/run_20261106_114000_136/solution_numbers.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/2-creating_microkinetic_model/solution.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/2-creating_microkinetic_model/solution_numbers.csv filter=lfs diff=lfs merge=lfs -text
+/hexene_epoxidation/output_variables/runs/baseline_20261104_pre_run_isolation/jacobian_norm.csv filter=lfs diff=lfs merge=lfs -text
