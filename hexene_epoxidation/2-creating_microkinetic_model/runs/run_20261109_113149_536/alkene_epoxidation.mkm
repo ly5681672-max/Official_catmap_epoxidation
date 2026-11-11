@@ -1,0 +1,124 @@
+#
+# Microkinetic model parameters
+#
+
+# 1-hexene epoxidation with H2O2
+rxn_expressions = [
+    'H2O2_g + 2* -> Ha* + OOH*',
+    'C6H12_g + * -> C6H12*',
+    'OOH* + C6H12* + * <-> OOH-C6H12* + 2* -> C6H12O* + O* + Hb*', # epoxidation, TS
+    'C6H12O* <-> C6H12O_g + *',                                  # epoxide desorption
+    'Hb* + O* <-> Hb-O* + * -> OH* + *',                         # H transfer, TS
+    'Ha* + OH* -> * + H2O*',                                     # water formation
+    'H2O* <-> H2O_g + *',                                        # water desorption
+]
+
+# Surfaces selected for microkinetic modeling (tinb is excluded pending validation).
+surface_names = [
+    'tife', 'timn', 'tihf', 'tire', 'timo', 'tiv', 'tizr',
+    'tico', 'titi', 'tiw', 'tita', 'ticr', 'ti', 'tini'
+]
+
+# The old c_s descriptor does not exist in the present reaction network.
+# OOH_s describes H2O2 activation/intermediate stability, while C6H12_s describes
+# the stability/removal of surface oxygen after epoxidation.
+descriptor_names = ['Ha_s', 'O_s']
+
+# Ranges cover the present Ti-M data and leave a small margin for interpolation.
+# 描述符范围由 mkm_job.py 根据真实能量自动计算
+descriptor_ranges = None
+resolution = 50
+
+# Experimental reaction temperature: 60 degC
+temperature = 333.15
+
+#
+# Species definitions / reaction conditions
+#
+# Experimental feed:
+#   1.2 g 1-hexene
+#   1.2 g 30 wt% H2O2 aqueous solution
+#
+# This is a liquid-phase system. CatMAP's "pressure" variable is therefore used
+# here as a first-order effective activity/reservoir parameter rather than as a
+# literal gas-phase partial pressure. A more quantitative liquid-phase model
+# should later include solution chemical potentials / solvation corrections.
+species_definitions = {}
+
+# 1-hexene organic phase: pure-liquid standard-state approximation, a ~ 1
+species_definitions['C6H12_g'] = {
+    'pressure': 0.593
+}
+
+# 30 wt% H2O2 aqueous solution corresponds approximately to
+# x(H2O2) = 0.185 and x(H2O) = 0.815.
+species_definitions['H2O2_g'] = {
+    'pressure': 0.089
+}
+
+species_definitions['H2O_g'] = {
+    'pressure': 0.911
+}
+
+# Epoxide is absent at the beginning of the experiment. A very small positive
+# value is used instead of exactly zero for numerical robustness.
+species_definitions['C6H12O_g'] = {
+    'pressure': 0.386
+}
+
+# Surface site
+species_definitions['s'] = {
+    'site_names': ['111'],
+    'total': 1
+}
+
+# Ha/Hb denote H atoms at two different local positions and are not standard
+# chemical formulae, so their elemental compositions must be supplied explicitly.
+species_definitions['Ha_s'] = {
+    'composition': {'H': 1}
+}
+
+species_definitions['Hb_s'] = {
+    'composition': {'H': 1}
+}
+
+species_definitions['Hb-O_s'] = {
+    'composition': {'H': 1, 'O': 1}
+}
+
+#
+# Data / parser parameters
+#
+data_file = 'alkene_epoxidation_dft.pkl'
+input_file = 'energies_dft_neb.txt'
+
+#
+# Thermodynamic parameters
+#
+# The experiment is liquid phase, while the *_g labels are reservoir species.
+# Until explicit liquid/solvation free energies are available, frozen_gas avoids
+# adding a gas-phase entropy correction that would be inappropriate for liquids.
+gas_thermo_mode = 'frozen_gas'
+adsorbate_thermo_mode = 'frozen_adsorbate'
+pressure_mode = 'static'
+
+#
+# Scaling parameters
+#
+# Force the two selected descriptors to map directly onto the corresponding
+# adsorption energies. Other species are fitted by the generalized linear scaler.
+scaling_constraint_dict = {
+    'Ha_s': [None, None, None],
+    'O_s': [None, None, None],
+}
+
+#
+# Solver parameters
+#
+DEBUG = True
+decimal_precision = 200
+# tolerance = 1e-50  绝对残差容差
+# 必须使用任意精度数值，不能直接写浮点字面量 1e-510
+tolerance = __import__('mpmath').mp.mpf('1e-140')
+max_rootfinding_iterations = 300
+max_bisections = 6
