@@ -170,7 +170,7 @@ _t_checkpoints = [('模型加载', _t_total_start)]
 def _t_mark(label):
     _t_checkpoints.append((label, time.perf_counter()))
 
-model.descriptor_ranges = auto_descriptor_ranges(model)
+model.descriptor_ranges = auto_descriptor_ranges(model, margin=0.25)
 _t_mark('描述符范围')
 print("自动描述符范围:")
 for name, bounds in zip(model.descriptor_names, model.descriptor_ranges):

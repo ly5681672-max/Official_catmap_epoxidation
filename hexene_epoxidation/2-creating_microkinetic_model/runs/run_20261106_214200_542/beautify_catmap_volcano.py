@@ -1,0 +1,279 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Render a presentation-ready CatMAP volcano map from an existing run cache.
+
+This utility reloads a run's CatMAP log and pickle cache. It does
+not call ReactionModel.run(), change scientific inputs, or overwrite source
+results. Run it with the same Python environment used for the CatMAP job.
+"""
+
+from __future__ import annotations
+
+import argparse
+import math
+import os
+from datetime import datetime
+from pathlib import Path
+
+DEFAULT_RUN_DIR = Path(
+    r"H:\catmap\Official_catmap_epoxidation\hexene_epoxidation"
+    r"\2-creating_microkinetic_model\runs\run_20261106_210206_157"
+)
+DEFAULT_SPECIES = "C6H12O_g"
+
+# Small offsets for the dense middle cluster; other labels are placed to the
+# upper-right. Matplotlib annotation offsets are measured in points.
+LABEL_OFFSETS = {
+    "tife": (5, 9),
+    "timn": (-30, -11),
+    "titi": (7, -13),
+    "tihf": (7, 8),
+    "tini": (6, 8),
+    "tico": (7, 8),
+    "tizr": (7, 8),
+    "tiv": (7, 8),
+    "tire": (7, 8),
+    "timo": (7, 8),
+    "tiw": (7, 8),
+    "tita": (7, 8),
+    "ticr": (7, 8),
+    "ti": (7, 8),
+}
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="美化已有 CatMAP 描述符图；读取缓存，不重新求解。"
+    )
+    parser.add_argument("--run-dir", type=Path, default=DEFAULT_RUN_DIR,
+                        help="包含 .mkm、.pkl 和结果目录的 run 文件夹")
+    parser.add_argument("--species", default=DEFAULT_SPECIES,
+                        help="只显示的气相物种标签，默认 C6H12O_g")
+    parser.add_argument("--variable", choices=("turnover_frequency", "production_rate"),
+                        default="turnover_frequency",
+                        help="背景火山图使用的 CatMAP 输出变量，默认 TOF")
+    parser.add_argument("--min-log10", type=float, default=None,
+                        help="色阶下限 log10(|value|)，默认自动估计")
+    parser.add_argument("--max-log10", type=float, default=None,
+                        help="色阶上限 log10(|value|)，默认自动估计")
+    parser.add_argument("--resolution-enhancement", type=int, default=2,
+                        help="仅提高绘图插值平滑度，不增加求解网格，默认 2")
+    parser.add_argument("--output", type=Path, default=None,
+                        help="输出 PDF；默认写到 descriptor_Ha_O/beautified/")
+    return parser.parse_args()
+
+
+def nearest_value(descriptor, data_map, output_index):
+    """Return a map value at the closest existing CatMAP grid coordinate."""
+    best_value = None
+    best_distance = math.inf
+    for point, values in data_map:
+        distance = sum((float(a) - float(b)) ** 2
+                       for a, b in zip(descriptor, point))
+        if distance < best_distance:
+            best_distance = distance
+            best_value = float(values[output_index])
+    return best_value
+
+
+def round_log_bound(value: float, lower: bool) -> float:
+    return float(math.floor(value) if lower else math.ceil(value))
+
+
+def main() -> int:
+    args = parse_args()
+    run_dir = args.run_dir.resolve()
+    mkm_file = run_dir / "alkene_epoxidation.mkm"
+    log_file = run_dir / "alkene_epoxidation.log"
+    if not mkm_file.is_file() or not log_file.is_file():
+        raise FileNotFoundError(
+            f"需要同时存在模型配置和 CatMAP 日志: {mkm_file} / {log_file}"
+        )
+
+    # CatMAP reads input_file and data_file relative to the current directory.
+    previous_dir = Path.cwd()
+    os.chdir(run_dir)
+    try:
+        from catmap import ReactionModel, analyze
+        import matplotlib.pyplot as plt
+        import numpy as np
+        from matplotlib.colors import Normalize
+        from matplotlib.lines import Line2D
+        from matplotlib.ticker import MaxNLocator
+
+        # Loading the run log restores output_labels and cached maps from the
+        # companion .pkl. Do not call model.run() here.
+        model = ReactionModel(setup_file=str(log_file))
+        data_map = getattr(model, f"{args.variable}_map", None)
+        labels = list(getattr(model, "output_labels", {}).get(args.variable, []))
+        if not data_map or args.species not in labels:
+            raise RuntimeError(
+                f"缓存中没有 {args.variable}/{args.species}。"
+                "请确认该 run 保存了对应 map；本脚本不会启动模型重算。"
+            )
+
+        output_index = labels.index(args.species)
+        positive_logs = []
+        for _point, values in data_map:
+            value = float(values[output_index])
+            if math.isfinite(value) and value > 0:
+                positive_logs.append(math.log10(value))
+        if not positive_logs:
+            raise RuntimeError(
+                f"{args.species} 没有正的有限 {args.variable} 值，"
+                "不能生成正向对数火山图。"
+            )
+
+        # Preserve every positive catalyst point in the chosen scale while
+        # trimming only the background distribution's extreme tails.
+        point_logs = []
+        point_values = {}
+        descriptor_dict = getattr(model, "descriptor_dict", {}) or {}
+        for surface, descriptor in descriptor_dict.items():
+            value = nearest_value(descriptor, data_map, output_index)
+            point_values[surface] = value
+            if value is not None and math.isfinite(value) and value > 0:
+                point_logs.append(math.log10(value))
+
+        data_lo, data_hi = np.percentile(positive_logs, [2, 98])
+        low_log = args.min_log10
+        high_log = args.max_log10
+        if low_log is None:
+            low_log = min(data_lo, min(point_logs) if point_logs else data_lo)
+        if high_log is None:
+            high_log = max(data_hi, max(point_logs) if point_logs else data_hi)
+        low_log = round_log_bound(low_log, lower=True)
+        high_log = round_log_bound(high_log, lower=False)
+        if high_log <= low_log:
+            raise ValueError("max-log10 必须大于 min-log10")
+
+        plotter = analyze.VectorMap(model)
+        plotter.plot_variable = args.variable
+        plotter.include_labels = [args.species]
+        plotter.log_scale = True
+        plotter.min = 10.0 ** low_log
+        plotter.max = 10.0 ** high_log
+        plotter.n_ticks = 8
+        plotter.resolution_enhancement = max(1, args.resolution_enhancement)
+        plotter.plot_size = 5.2
+        plotter.plot_function = "contourf"
+        plotter.colormap = plt.cm.viridis
+        plotter.descriptor_labels = [
+            f"{name.removesuffix('_s')} reactivity [eV]"
+            for name in model.descriptor_names
+        ]
+        plotter.subplots_adjust_kwargs = {
+            "left": 0.16, "right": 0.86, "bottom": 0.15, "top": 0.92
+        }
+
+        # Marker fill color encodes the sampled value in the same log scale as
+        # the map. Non-positive net rates use a gray X so sign is not hidden.
+        cmap = plotter.colormap
+        norm = Normalize(vmin=low_log, vmax=high_log, clip=True)
+        plotter.descriptor_pt_args = {}
+        plotter.descriptor_label_args = {}
+        for surface in descriptor_dict:
+            value = point_values.get(surface)
+            if value is not None and math.isfinite(value) and value > 0:
+                marker = "o"
+                color = cmap(norm(math.log10(value)))
+                edge = "#202020"
+            else:
+                marker = "X"
+                color = "#666666"
+                edge = "white"
+            plotter.descriptor_pt_args[surface] = {
+                "fmt": marker,
+                "markersize": 8,
+                "markerfacecolor": color,
+                "markeredgecolor": edge,
+                "markeredgewidth": 0.8,
+                "linestyle": "none",
+                "zorder": 5,
+            }
+            plotter.descriptor_label_args[surface] = {
+                "xytext": LABEL_OFFSETS.get(surface, (6, 7)),
+                "textcoords": "offset points",
+                "fontsize": 8,
+                "ha": "left",
+                "va": "bottom",
+                "bbox": {
+                    "boxstyle": "round,pad=0.15",
+                    "facecolor": "white",
+                    "edgecolor": "none",
+                    "alpha": 0.78,
+                },
+                "arrowprops": {"arrowstyle": "-", "color": "#555555", "lw": 0.45},
+            }
+
+        # Native CatMAP VectorMap rendering; no call to model.run().
+        fig = plotter.plot(save=False)
+        ax = fig.axes[0]
+
+        # Add sparse, labeled iso-rate boundaries over the native filled map.
+        # CatMAP's own interpolation is reused so contour coordinates match.
+        from catmap.model import ReactionModel as CatMapReactionModel
+
+        if hasattr(model.resolution, "__len__"):
+            rx, ry = (int(model.resolution[0]), int(model.resolution[1]))
+        else:
+            rx = ry = int(model.resolution)
+        rx *= plotter.resolution_enhancement
+        ry *= plotter.resolution_enhancement
+        z = CatMapReactionModel.map_to_array(
+            data_map, model.descriptor_ranges, [rx, ry],
+            log_interpolate=True, minval=plotter.min,
+        )[:, :, output_index]
+        z_log = np.full(z.shape, np.nan, dtype=float)
+        positive = np.isfinite(z) & (z > 0)
+        z_log[positive] = np.log10(z[positive])
+        lo = math.ceil(low_log)
+        hi = math.floor(high_log)
+        step = max(1, math.ceil(max(1, hi - lo) / 10))
+        levels = np.arange(lo, hi + 1, step, dtype=float)
+        if len(levels):
+            x = np.linspace(*model.descriptor_ranges[0], rx)
+            y = np.linspace(*model.descriptor_ranges[1], ry)
+            contours = ax.contour(
+                x, y, z_log, levels=levels, colors="#263238",
+                linewidths=0.55, alpha=0.72, zorder=3,
+            )
+            ax.clabel(contours, inline=True, fontsize=6, fmt=lambda v: f"10^{v:.0f}")
+
+        sign_legend = [
+            Line2D([0], [0], marker="o", linestyle="none", color="white",
+                   markerfacecolor="#78909C", markeredgecolor="#202020",
+                   markersize=7, label="positive net value"),
+            Line2D([0], [0], marker="X", linestyle="none", color="#666666",
+                   markersize=7, label="zero / negative net value"),
+        ]
+        ax.legend(handles=sign_legend, loc="lower left", fontsize=7,
+                  framealpha=0.9, title="Catalyst marker", title_fontsize=7)
+        ax.xaxis.set_major_locator(MaxNLocator(7))
+        ax.yaxis.set_major_locator(MaxNLocator(7))
+        ax.grid(False)
+        fig.suptitle(
+            f"{args.species} {args.variable.replace('_', ' ')} volcano map",
+            fontsize=12, y=0.98,
+        )
+
+        if args.output:
+            output = args.output.resolve()
+        else:
+            output = run_dir / "descriptor_Ha_O" / "beautified" / (
+                "volcano_" + datetime.now().strftime("%Y%m%d_%H%M%S") + ".pdf"
+            )
+        output.parent.mkdir(parents=True, exist_ok=True)
+        fig.savefig(output, format="pdf", bbox_inches="tight", dpi=300)
+        plt.close(fig)
+        print(f"已保存: {output}")
+        print(f"读取缓存 map: {args.variable}/{args.species}")
+        print(f"色阶: 10^{low_log:g} 到 10^{high_log:g}")
+        print("未调用 model.run()；未重新求解 CatMAP。")
+        return 0
+    finally:
+        os.chdir(previous_dir)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

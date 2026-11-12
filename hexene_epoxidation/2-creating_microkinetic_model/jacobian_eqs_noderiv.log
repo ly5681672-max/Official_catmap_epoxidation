@@ -1,6 +1,6 @@
 s = [0]*2
-s[0] = (mpf('0.0'))
-s[1] = (mpf('1.0') - theta[0] - theta[1] - theta[2] - theta[3] - theta[4] - theta[5] - theta[6] - theta[7])
+s[0] = (mpf('1.0') - theta[0] - theta[1] - theta[2] - theta[3] - theta[4] - theta[5] - theta[6] - theta[7])
+s[1] = (mpf('0.0'))
 J[0][0] = 0 + 1*-1*kr[2]*theta[7]*theta[4] + -1*kf[3]
 J[0][1] = 0 + 1*kf[2]*theta[6]*theta[8]
 J[0][2] = 0

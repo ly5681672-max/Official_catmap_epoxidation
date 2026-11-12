@@ -22,12 +22,12 @@ surface_names = [
 # The old c_s descriptor does not exist in the present reaction network.
 # OOH_s describes H2O2 activation/intermediate stability, while C6H12_s describes
 # the stability/removal of surface oxygen after epoxidation.
-descriptor_names = ['Ha_s', 'O_s']
+descriptor_names = ['C6H12_s', 'O_s']
 
 # Ranges cover the present Ti-M data and leave a small margin for interpolation.
 # 描述符范围由 mkm_job.py 根据真实能量自动计算
 descriptor_ranges = None
-resolution = 30
+resolution = 50
 
 # Experimental reaction temperature: 60 degC
 temperature = 333.15
@@ -47,23 +47,23 @@ species_definitions = {}
 
 # 1-hexene organic phase: pure-liquid standard-state approximation, a ~ 1
 species_definitions['C6H12_g'] = {
-    'pressure': 1.0
+    'pressure': 0.593
 }
 
 # 30 wt% H2O2 aqueous solution corresponds approximately to
 # x(H2O2) = 0.185 and x(H2O) = 0.815.
 species_definitions['H2O2_g'] = {
-    'pressure': 0.185
+    'pressure': 0.089
 }
 
 species_definitions['H2O_g'] = {
-    'pressure': 0.815
+    'pressure': 0.911
 }
 
 # Epoxide is absent at the beginning of the experiment. A very small positive
 # value is used instead of exactly zero for numerical robustness.
 species_definitions['C6H12O_g'] = {
-    'pressure': 1e-20
+    'pressure': 0.386
 }
 
 # Surface site
@@ -108,7 +108,7 @@ pressure_mode = 'static'
 # Force the two selected descriptors to map directly onto the corresponding
 # adsorption energies. Other species are fitted by the generalized linear scaler.
 scaling_constraint_dict = {
-    'Ha_s': [None, None, None],
+    'C6H12_s': [None, None, None],
     'O_s': [None, None, None],
 }
 
@@ -119,6 +119,6 @@ DEBUG = True
 decimal_precision = 200
 # tolerance = 1e-50  绝对残差容差
 # 必须使用任意精度数值，不能直接写浮点字面量 1e-510
-tolerance = __import__('mpmath').mp.mpf('1e-160')
+tolerance = __import__('mpmath').mp.mpf('1e-80')
 max_rootfinding_iterations = 300
 max_bisections = 6
