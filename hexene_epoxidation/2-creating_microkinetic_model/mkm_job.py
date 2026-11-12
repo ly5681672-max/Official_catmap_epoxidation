@@ -50,11 +50,13 @@ def save_run_to_archive(output_dir):
     run_dir.mkdir(parents=True, exist_ok=True)
 
     base = Path(__file__).resolve().parent
+    script_file = Path(__file__).resolve()
     for f in base.iterdir():
-        if f.is_file() and f.name != Path(__file__).name:
+        if f.is_file():
             shutil.copy2(f, run_dir / f.name)
     shutil.copytree(output_dir, run_dir / output_dir.name, dirs_exist_ok=True)
     print(f"运行结果已保存到: {run_dir}")
+    print(f"脚本快照已保存: {run_dir / script_file.name}")
 
 
 def to_float(v):
@@ -83,7 +85,6 @@ def export_tof_and_coverage(model, output_dir):
     for pt, tof_vals in model.turnover_frequency_map:
         key = tuple(to_float(x) for x in pt)
         tof_lookup[key] = [to_float(v) for v in tof_vals]
-
     cvg_lookup = {}
     for pt, cvg_vals in model.coverage_map:
         key = tuple(to_float(x) for x in pt)
@@ -170,7 +171,7 @@ _t_checkpoints = [('模型加载', _t_total_start)]
 def _t_mark(label):
     _t_checkpoints.append((label, time.perf_counter()))
 
-model.descriptor_ranges = auto_descriptor_ranges(model, margin=0.25)
+model.descriptor_ranges = auto_descriptor_ranges(model, margin=0.05)
 _t_mark('描述符范围')
 print("自动描述符范围:")
 for name, bounds in zip(model.descriptor_names, model.descriptor_ranges):
@@ -187,7 +188,7 @@ vm = analyze.VectorMap(model)
 
 vm.plot_variable = 'rate'
 vm.log_scale = True
-vm.min = 1e-80
+vm.min = 1e-140
 vm.max = 1e-1
 vm.plot(save=str(output_dir / 'rate.pdf'))
 
@@ -230,7 +231,7 @@ print(f"rate_control_map 构建完成: {len(_rate_control_map)} 个点")
 _t_mark('DRC map构建')
 
 vm.production_rate_map = model.production_rate_map
-vm.threshold = 0
+vm.threshold = 1e-30
 vm.include_empty = True
 vm.plot_variable = 'production_rate'
 vm.min = 1e-80
