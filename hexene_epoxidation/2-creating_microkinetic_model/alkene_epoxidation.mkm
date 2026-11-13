@@ -4,12 +4,12 @@
 
 # 1-hexene epoxidation with H2O2
 rxn_expressions = [
-    'H2O2_g + 2* -> Ha* + OOH*',
+    'H2O2_g + 2* -> H* + OOH*',
     'C6H12_g + * -> C6H12*',
-    'OOH* + C6H12* + * <-> OOH-C6H12* + 2* -> C6H12O* + O* + Hb*', # epoxidation, TS
+    'OOH* + C6H12* + * <-> OOH-C6H12* + 2* -> C6H12O* + O* + H*', # epoxidation, TS
     'C6H12O* <-> C6H12O_g + *',                                  # epoxide desorption
-    'Hb* + O* <-> Hb-O* + * -> OH* + *',                         # H transfer, TS
-    'Ha* + OH* -> * + H2O*',                                     # water formation
+    'H* + O* <-> H-O* + * -> OH* + *',                         # H transfer, TS
+    'H* + OH* -> * + H2O*',                                     # water formation
     'H2O* <-> H2O_g + *',                                        # water desorption
 ]
 
@@ -22,7 +22,7 @@ surface_names = [
 # The old c_s descriptor does not exist in the present reaction network.
 # OOH_s describes H2O2 activation/intermediate stability, while C6H12_s describes
 # the stability/removal of surface oxygen after epoxidation.
-descriptor_names = ['Ha_s', 'O_s']
+descriptor_names = ['H_s', 'O_s']
 
 # Ranges cover the present Ti-M data and leave a small margin for interpolation.
 # 描述符范围由 mkm_job.py 根据真实能量自动计算
@@ -68,25 +68,11 @@ species_definitions['s'] = {
     'total': 1
 }
 
-# Ha/Hb denote H atoms at two different local positions and are not standard
-# chemical formulae, so their elemental compositions must be supplied explicitly.
-species_definitions['Ha_s'] = {
-    'composition': {'H': 1}
-}
-
-species_definitions['Hb_s'] = {
-    'composition': {'H': 1}
-}
-
-species_definitions['Hb-O_s'] = {
-    'composition': {'H': 1, 'O': 1}
-}
-
 #
 # Data / parser parameters
 #
 data_file = 'alkene_epoxidation_dft.pkl'
-input_file = 'energies_dft_neb.txt'
+input_file = 'energies_dft_neb_no_a.txt'
 
 #
 # Thermodynamic parameters
@@ -104,7 +90,7 @@ pressure_mode = 'static'
 # Force the two selected descriptors to map directly onto the corresponding
 # adsorption energies. Other species are fitted by the generalized linear scaler.
 scaling_constraint_dict = {
-    'Ha_s': [None, None, None],
+    'H_s': [None, None, None],
     'O_s': [None, None, None],
 }
 

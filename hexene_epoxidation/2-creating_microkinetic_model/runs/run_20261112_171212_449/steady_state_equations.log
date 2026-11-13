@@ -1,19 +1,55 @@
+# ================= 索引图例（来源：adsorbate_names.log）=================
+# θ[0]=C6H12O*   θ[1]=C6H12*   θ[2]=H2O*    θ[3]=Ha*     θ[4]=Hb*
+# θ[5]=OH*       θ[6]=OOH*     θ[7]=O*      θ[8]=*（空位，numbers solver 专用未知量）
+# p[0]=C6H12O(g) p[1]=C6H12(g) p[2]=H2O2(g) p[3]=H2O(g)
+# r[0..r[6] = alkene_epoxidation.mkm 中 rxn_expressions 的第 1~7 条
+# =======================================================================
+
 s = [0]*2
 s[0] = (mpf('1.0') - theta[0] - theta[1] - theta[2] - theta[3] - theta[4] - theta[5] - theta[6] - theta[7])
+#      ↑位点守恒：表面位点 's' 上空位分数 = 1 − Σ(8 个吸附物种覆盖度)
+#        注意这里只减到 θ[7]，不含 θ[8] 本身
 s[1] = (mpf('0.0'))
+#      ↑气相伪位点 'g'，没有覆盖度约束，恒为 0（占位用，不参与物理意义）
+
 r[0] = kf[0]*p[2]*theta[8]*theta[8] - kr[0]*theta[3]*theta[6]
+#      R1: H2O2(g) + 2* -> Ha* + OOH*      正向消耗 2 个空位 → theta[8] 出现两次
+
 r[1] = kf[1]*p[1]*theta[8] - kr[1]*theta[1]
+#      R2: C6H12(g) + * -> C6H12*
+
 r[2] = kf[2]*theta[6]*theta[1]*theta[8] - kr[2]*theta[0]*theta[7]*theta[4]
+#      R3: OOH* + C6H12* + * <-> [OOH-C6H12*] -> C6H12O* + O* + Hb*   ← 环氧化主反应
+#          正向: OOH(θ6)·C6H12(θ1)·空位(θ8)；逆向: C6H12O(θ0)·O(θ7)·Hb(θ4)
+
 r[3] = kf[3]*theta[0] - kr[3]*p[0]*theta[8]
+#      R4: C6H12O* <-> C6H12O(g) + *       ← 目标产物脱附
+
 r[4] = kf[4]*theta[4]*theta[7] - kr[4]*theta[5]*theta[8]
+#      R5: Hb* + O* <-> [Hb-O*] -> OH* + *     ← H 转移（清除表面 O）
+
 r[5] = kf[5]*theta[3]*theta[5] - kr[5]*theta[2]*theta[8]
+#      R6: Ha* + OH* -> * + H2O*
+
 r[6] = kf[6]*theta[2] - kr[6]*p[3]*theta[8]
+#      R7: H2O* <-> H2O(g) + *
+
 dtheta_dt[0] =  + 1*r[2] + -1*r[3]
+#      C6H12O*：R3 生成，R4 脱附消耗
 dtheta_dt[1] =  + 1*r[1] + -1*r[2]
+#      C6H12* ：R2 吸附生成，R3 消耗
 dtheta_dt[2] =  + 1*r[5] + -1*r[6]
+#      H2O*   ：R6 生成，R7 脱附消耗
 dtheta_dt[3] =  + 1*r[0] + -1*r[5]
+#      Ha*    ：R1 生成，R6 消耗
 dtheta_dt[4] =  + 1*r[2] + -1*r[4]
+#      Hb*    ：R3 生成，R5 消耗
 dtheta_dt[5] =  + 1*r[4] + -1*r[5]
+#      OH*    ：R5 生成，R6 消耗
 dtheta_dt[6] =  + 1*r[0] + -1*r[2]
+#      OOH*   ：R1 生成，R3 消耗
 dtheta_dt[7] =  + 1*r[2] + -1*r[4]
+#      O*     ：R3 生成，R5 消耗   ← 描述符 O_s 对应的物种，毒化关键
 dtheta_dt[8] =  + -2*r[0] + -1*r[1] + -1*r[2] + 1*r[3] + 1*r[4] + 1*r[5] + 1*r[6]
+#      空位 * ：R1 占 2 个、R2/R3 各占 1 个；R4/R5/R6/R7 各释放 1 个
+#      （稳态时该式 = 0，与 θ[8] = s[0] = 1 − Σθ[0..7] 联立封闭方程组）
