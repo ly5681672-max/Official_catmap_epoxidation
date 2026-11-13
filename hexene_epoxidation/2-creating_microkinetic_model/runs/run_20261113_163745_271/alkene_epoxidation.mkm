@@ -1,0 +1,103 @@
+# 微观动力学模型参数
+
+# 1-己烯与 H2O2 的环氧化反应
+rxn_expressions = [
+    'H2O2_g + 2* -> H* + OOH*',
+    'C6H12_g + * -> C6H12*',
+    'OOH* + C6H12* + * <-> OOH-C6H12* + 2* -> C6H12O* + O* + H*', # 环氧化反应，含过渡态（TS）
+    'C6H12O* <-> C6H12O_g + *',                                  # 环氧化物脱附
+    'H* + O* <-> H-O* + * -> OH* + *',                         # H 转移，含过渡态（TS）
+    'H* + OH* -> * + H2O*',                                     # 水的生成
+    'H2O* <-> H2O_g + *',                                        # 水脱附
+]
+
+# 用于微观动力学建模的表面体系（tinb 暂待验证后再纳入）
+surface_names = [
+    'tife', 'timn', 'tihf', 'tire', 'timo', 'tiv', 'tizr',
+    'tico', 'titi', 'tiw', 'tita', 'ticr', 'ti', 'tini'
+]
+
+# 旧的 c_s 描述符在当前反应网络中并不存在。
+# OOH_s 描述 H2O2 的活化以及中间体稳定性；C6H12_s 则描述
+# 环氧化反应后表面氧物种的稳定性与其去除难易程度。
+descriptor_names = ['H_s', 'O_s']
+
+# 取值范围覆盖当前的 Ti-M 体系数据，并为插值留出少量余量。
+# 描述符范围由 mkm_job.py 根据真实能量自动计算
+descriptor_ranges = None
+resolution = 50
+
+# 实验反应温度：60 摄氏度
+temperature = 333.15
+
+#
+# 物种定义 / 反应条件
+#
+# 实验投料：
+#   1.2 g 1-己烯
+#   1.2 g 质量分数 30% 的 H2O2 水溶液
+#
+# 本体系为液相体系，因此这里将 CatMAP 的 "pressure" 变量用作一阶的
+# 有效活度/物种储库参数，而非字面意义上的气相分压。
+# 更定量的液相模型后续应引入溶液化学势与溶剂化校正。
+species_definitions = {}
+
+# 1-己烯有机相：采用纯液体标准态近似，活度 a ≈ 1
+species_definitions['C6H12_g'] = {
+    'pressure': 1
+}
+
+species_definitions['H2O2_g'] = {
+    'pressure': 1
+}
+
+species_definitions['H2O_g'] = {
+    'pressure': 0
+}
+
+species_definitions['C6H12O_g'] = {
+    'pressure': 0
+}
+
+# 表面活性位点
+species_definitions['s'] = {
+    'site_names': ['111'],
+    'total': 1
+}
+
+#
+# 数据 / 解析器参数
+#
+data_file = 'alkene_epoxidation_dft.pkl'
+input_file = 'energies_dft_neb_no_a.txt'
+
+#
+# 热力学参数
+#
+# 实验为液相体系，而 *_g 标记的物种仅作为储库物种（reservoir species）。
+# 在获得明确的液相/溶剂化自由能之前，采用 frozen_gas 模式，
+# 以避免引入对液相不适用的气相熵校正。
+gas_thermo_mode = 'frozen_gas'
+adsorbate_thermo_mode = 'frozen_adsorbate'
+pressure_mode = 'static'
+
+#
+# 标度关系（scaling）参数
+#
+# 强制所选的两个描述符直接映射到对应的吸附能上，
+# 其余物种由通用线性标度器（generalized linear scaler）拟合。
+scaling_constraint_dict = {
+    'H_s': [None, None, None],
+    'O_s': [None, None, None],
+}
+
+#
+# 求解器参数
+#
+# DEBUG = True
+decimal_precision = 200
+# tolerance = 1e-50  绝对残差容差
+# 必须使用任意精度数值，不能直接写浮点字面量 1e-510
+tolerance = __import__('mpmath').mp.mpf('1e-100')
+max_rootfinding_iterations = 300
+max_bisections = 6
