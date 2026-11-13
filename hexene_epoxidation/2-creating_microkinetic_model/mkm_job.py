@@ -171,7 +171,7 @@ _t_checkpoints = [('模型加载', _t_total_start)]
 def _t_mark(label):
     _t_checkpoints.append((label, time.perf_counter()))
 
-model.descriptor_ranges = auto_descriptor_ranges(model, margin=0.05)
+model.descriptor_ranges = auto_descriptor_ranges(model, margin=0)
 _t_mark('描述符范围')
 print("自动描述符范围:")
 for name, bounds in zip(model.descriptor_names, model.descriptor_ranges):
@@ -231,11 +231,11 @@ print(f"rate_control_map 构建完成: {len(_rate_control_map)} 个点")
 _t_mark('DRC map构建')
 
 vm.production_rate_map = model.production_rate_map
-vm.threshold = 1e-30
+vm.threshold = 1e-160
 vm.include_empty = True
 vm.plot_variable = 'production_rate'
-vm.min = 1e-80
-vm.max = 1e-1
+vm.min = 1e-160
+vm.max = 1e-30
 vm.log_scale = True
 vm.include_descriptors = False
 vm.plot(save=str(output_dir / 'production_rate.pdf'))

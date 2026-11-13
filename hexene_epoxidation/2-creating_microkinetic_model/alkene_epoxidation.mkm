@@ -47,13 +47,11 @@ species_definitions = {}
 
 # 1-hexene organic phase: pure-liquid standard-state approximation, a ~ 1
 species_definitions['C6H12_g'] = {
-    'pressure': 0.593
+    'pressure': 1
 }
 
-# 30 wt% H2O2 aqueous solution corresponds approximately to
-# x(H2O2) = 0.185 and x(H2O) = 0.815.
 species_definitions['H2O2_g'] = {
-    'pressure': 0.089
+    'pressure': 1
 }
 
 species_definitions['H2O_g'] = {
