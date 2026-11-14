@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """对 910 运行中的 14 个真实催化剂进行 CatMAP 瞬态覆盖度分析。"""
 
@@ -128,7 +128,7 @@ def _transient_one_impl(model, descriptors, args):
     def jac_np(t, y):
         theta = [mp.mpf(v) for v in y]
         J = solver.ideal_steady_state_jacobian(theta)
-        return np.array([[float(v) for v in row] for row in J])
+        return np.asarray(J.tolist(), dtype=float)
 
     y0 = np.array([float(v) for v in theta0])
     sample_times = np.geomspace(args.first_time, args.max_time, args.samples - 1)
@@ -142,7 +142,7 @@ def _transient_one_impl(model, descriptors, args):
 
     times = [mp.mpf("0")] + [mp.mpf(str(t)) for t in sample_times]
     theta_series = [list(theta0)] + [
-        [mp.mpf(repr(v)) for v in sol.y[:, k]] for k in range(sol.y.shape[1])
+        [mp.mpf(str(float(v))) for v in sol.y[:, k]] for k in range(sol.y.shape[1])
     ]
 
     rows = []
